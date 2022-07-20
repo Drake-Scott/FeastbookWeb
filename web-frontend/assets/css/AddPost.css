@@ -1,0 +1,62 @@
+/* .postContainer {
+    display: flex;
+    height: 70%;
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1B262C;
+} */
+
+.postContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    display: flex;
+    background-color: #1B262C; 
+}
+
+.imageBox {
+    width: 50%;
+    height: 100%;
+    color: white;
+}
+
+.postImage {
+}
+
+.detailsContainer {
+    width: 50%;
+    height: 100%;
+    color: white;
+    /* background-color: green; */
+}
+
+.dishName {
+    margin: 1%;
+    align-self: center;
+}
+
+.detailsInputs {
+    display: flex;
+}
+
+.ingredientsContainer {
+    width: 50%;
+}
+
+.ingredientInput {
+    width: 75%;
+}
+
+.directionsContainer {
+    width: 50%;
+}
+
+.directionInput {
+    width: 75%;
+}

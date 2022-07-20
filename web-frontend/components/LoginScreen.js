@@ -24,7 +24,7 @@ const LoginScreen = ({navigation, setReturnToken}) => {
     const handleSubmitPress = () => {
         setErrortext('');
         if (!userEmail) {
-            alert('Email required');
+            alert('Username required');
             return;
         }
         if (!userPassword) {
@@ -34,33 +34,26 @@ const LoginScreen = ({navigation, setReturnToken}) => {
         setLoading(true);
         let dataToSend = {login: userEmail, password: userPassword};
         var s = JSON.stringify(dataToSend);
-        let formBody = [];
-        for (let key in dataToSend) {
-            let encodedKey = encodeURIComponent(key);
-            let encodedValue = encodeURIComponent(dataToSend[key]);
-            formBody.push(encodedKey + '=' + encodedValue);
-        }
-        formBody = formBody.join('&');
-
-        fetch('/api/login', {
+        fetch('http://localhost:5000/api/login', {
             method: 'POST',
-            body: s,
             headers: {
-                'Content-Type':
-                'application/json',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
+            body: s,
         })
         .then((response) => response.json())
         .then((responseJson) => {
             setLoading(false);
             console.log(responseJson);
-            
-            if (responseJson.status == 'success') {
-                setReturnToken({id: responseJson.data.id, name: responseJson.data.firstname}); 
+            console.log("Response Json: " + JSON.stringify(responseJson));
+            if (responseJson.id != -1) {
+                console.log("here");
+                setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
             }
             else {
                 setErrortext(responseJson.msg); 
-                console.log('Incorrect email and/or password');
+                console.log('Incorrect username and/or password');
             }
         })
         .catch((error) => {
@@ -68,6 +61,11 @@ const LoginScreen = ({navigation, setReturnToken}) => {
             console.error(error);
         });
     }
+
+    const handleForgotPassword = () => {
+        console.log("forgot password clicked")
+    }
+    console.log("in login.")
 
     return (
         <ScrollView style={{flex:1, backgroundColor: '#fff'}}>
@@ -99,11 +97,11 @@ const LoginScreen = ({navigation, setReturnToken}) => {
                         <SafeAreaView style={styles.SafeAreaView}>
                             
                             <View style={styles.spacingSmall}></View>
-                            <Text style={styles.loginPrompts}>Email</Text>
+                            <Text style={styles.loginPrompts}>Username</Text>
                             <TextInput
                                 style={styles.inputStyle}
                                 onChangeText={(userEmail) => setUserEmail(userEmail)}
-                                placeholder="Email"
+                                placeholder="Username"
                                 returnKeyType="next"
                                 onSubmitEditing={() => 
                                     passwordInputRef.current && passwordInputRef.current.focus()
@@ -133,7 +131,10 @@ const LoginScreen = ({navigation, setReturnToken}) => {
                                 <Text style={styles.buttonTextStyle}>Sign In</Text>
                             </TouchableOpacity>
                             <View style={styles.spacingSmall}></View>
-                            <Text style={styles.passwordResetText}>Forgot your password? Click here!</Text>
+                            <Text style={styles.passwordResetText}
+                                    onPress={handleForgotPassword}>
+                                Forgot your password? Click here!
+                            </Text>
                             <View style={styles.spacingSmall}></View>
                         </SafeAreaView>
                     </View>
@@ -297,6 +298,7 @@ const styles = StyleSheet.create({
     },
 
     passwordResetText: {
+        cursor: 'pointer',
         fontFamily: 'Montserrat',
         alignSelf: 'center',
         color: '#fff',

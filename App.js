@@ -13,7 +13,6 @@ import Navigator from './web-frontend/components/Navigator'
 const Stack = createStackNavigator();
 
 // if userToken is null, assume user is logged out.
-// var userToken = {id: 1, name:"Bob Smith"};
 // var userToken = null;
 
 const Auth = () => {

@@ -12,9 +12,12 @@ import {
   Image,
 } from 'react-native';
 import EmailConfirmation from './EmailConfirmation';
+// import { response } from 'express';
 
 
 const LoginScreen = ({navigation}) => {
+
+    console.log("in register.")
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
@@ -26,13 +29,9 @@ const LoginScreen = ({navigation}) => {
     const [showModal, setShowModal] = useState(false);
     const passwordInputRef = createRef();
 
-    // const handleModal = () => {
-    //     console.debug("Called handleModal()");
-    //     setShowModal(prev => !prev);
-    // };
 
     const handleSubmitPress = () => {
-        // handleModal();
+        
         setErrortext('');
         if (!firstname) {
             alert('First name required');
@@ -59,36 +58,34 @@ const LoginScreen = ({navigation}) => {
             return;
         }
         setLoading(true);
-        let dataToSend = {firstName: firstname, lastName: lastname, login: username, password: userPassword1, email: userEmail};
-        let formBody = [];
-        for (let key in dataToSend) {
-            let encodedKey = encodeURIComponent(key);
-            let encodedValue = encodeURIComponent(dataToSend[key]);
-            formBody.push(encodedKey + '=' + encodedValue);
-        }
-        formBody = formBody.join('&');
-        console.log(formBody);
-
-        fetch('/api/register', {
+        let dataToSend = {
+            firstName: firstname, 
+            lastName: lastname, 
+            login: username, 
+            password: userPassword1, 
+            email: userEmail
+        };
+        let s = JSON.stringify(dataToSend);
+        fetch('http://localhost:5000/api/register', {
             method: 'POST',
-            body: formBody,
             headers: {
-                'Content-Type':
-                'application/x-www-form-urlencoded;charset=UTF-8',
+                'Accept': 'application/json',
+                'Content-Type':'application/json',
             },
+            body: s,
         })
+
         .then((response) => response.json())
         .then((responseJson) => {
             setLoading(false);
             console.log(responseJson);
             
-            if (responseJson.status == 'success') {
-                // navigation.navigate('FeastBook - ConfirmEmail');
+            if (responseJson.added === true) {
+                navigation.navigate('FeastBook - ConfirmEmail');
             }
             else {
-                setErrortext(responseJson.msg);
-                // navigation.navigate('FeastBook - ConfirmEmail');
-                console.log('Incorrect email and/or password');
+                setErrortext(responseJson.error);
+                console.log('Failed to register. Error: ' + responseJson.error);
             }
         })
         .catch((error) => {
@@ -280,6 +277,8 @@ const styles = StyleSheet.create({
     },
 
     errorTextStyle: {
+        marginLeft: '10px',
+        color: 'red'
     },
 
     tabs: {

@@ -11,25 +11,25 @@ import {
   ScrollView,
 } from 'react-native';
 
-const EmailConfirmation = ({navigation, showModal, setShowModal}) => {
+const EmailConfirmation = ({navigation}) => {
 
-  function handleModalClick()
+  function handleRedirect()
   {
-    setShowModal(prev => !prev);
-    // navigation.navigate('FeastBook - Login');
+    navigation.navigate('FeastBook - Login');
   }
 
   return (
-    <View style={styles.ModalWrapper}>
-      <View style={{alignItems: 'center',
-                    }}>
-        <Text style={styles.ModalThank}> Thank you for registering! </Text>
-        <Text style={{color:'white',}}> Follow the instructions in your email to begin sharing and viewing recipes. </Text>
+    <View style={styles.confirmationWrapper}>
+      <View style={styles.upperHalf}>
+        <Text style={styles.thankText}> Thank you for registering! </Text>
+        <Text style={styles.thankSubtext}> Follow the instructions in your email to begin sharing and viewing recipes. </Text>
       </View>
-        <Text> Ready to log in?</Text>
-        <TouchableOpacity style={styles.buttonStyle} onPress={handleModalClick}>
+      <View style={styles.lowerHalf}>
+        <Text style={styles.readyPrompt}> Already confirmed your email?</Text>
+        <TouchableOpacity style={styles.buttonStyle} onPress={handleRedirect}>
           <Text style={styles.buttonTextStyle}>Click here to log in!</Text>
         </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -37,36 +37,50 @@ const EmailConfirmation = ({navigation, showModal, setShowModal}) => {
 export default EmailConfirmation;
 
 const styles = StyleSheet.create({
-  Background: {
-    width: '100%',
-    height: '100%',
-    position: "fixed",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 
-  ModalThank: {
-    paddingTop: '-100%',
-    color: 'white',
-    position: 'relative',
-    top: '-20%',
-    fontSize: '400%',
-  },
-
-  ModalWrapper: {
-    display: 'flex',
+  confirmationWrapper: {
     width: '50%',
     height: '80%',
+    borderRadius: '8%',
     backgroundColor: '#1B262C',
     zIndex: 10,
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
+
+  upperHalf: {
+    marginTop: '10%',
+    alignItems: 'center',
+    height: '50%',
+  },
+
+  thankText: {
+    fontFamily: 'Montserrat',
+    position: 'relative',
+    color: 'white',
+    fontSize: '400%',
+    marginBottom: '6%',
+  },
+
+  thankSubtext: {
+    fontFamily: 'Montserrat',
+    position: 'relative',
+    color: 'white',
+    alignSelf: 'center',
+  },
+
+  lowerHalf: {
+    
+  },
+
+  readyPrompt: {
+    fontFamily: 'Montserrat',
+    position: 'relative',
+    color: 'white',
+    alignSelf: 'center',
+  },  
 
   buttonStyle: {
     width: '65%',
@@ -82,9 +96,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     color: '#fff',
     alignSelf: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
     fontSize: 18,
     marginTop:4,
   },
 
 });
-
