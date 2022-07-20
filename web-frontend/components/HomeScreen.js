@@ -5,26 +5,13 @@ import '../assets/home-page.css';
 import Topbar from './Topbar';
 
 const HomeScreen = ({navigation, userToken}) => {
-    console.log('in HomeScreen: usertoken = ' + JSON.stringify(userToken));
 
-    function gotoUser()
-    {
-        navigation.navigate('FeastBook - Profile');
-    }
-    function gotoPlus()
-    {
-        navigation.navigate('FeastBook - Add Post');
-    }
-    function gotoHome()
-    {
-        return;
-    }
+    console.log('in HomeScreen: usertoken = ' + JSON.stringify(userToken));
 
     return (
         <>
             <Topbar navigation={navigation} 
-                    screenSelected={1}
-                    gotoPlus={gotoPlus} gotoUser={gotoUser} gotoHome={gotoHome}/>
+                    screenSelected={1}/>
             <div>HOME PAGE</div>
         </>
     )

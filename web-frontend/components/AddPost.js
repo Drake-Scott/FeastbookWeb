@@ -17,24 +17,10 @@ import {
 const AddPost = ({navigation, userToken}) => {
     console.log('in AddPost: usertoken = ' + JSON.stringify(userToken));
 
-    function gotoUser()
-    {
-        navigation.navigate('FeastBook - Profile');
-    }
-    function gotoPlus()
-    {
-        return;
-    }
-    function gotoHome()
-    {
-        navigation.navigate('FeastBook - Home');
-    }
-
   return (
     <>
         <Topbar navigation={navigation} 
-                screenSelected={2}
-                gotoPlus={gotoPlus} gotoUser={gotoUser} gotoHome={gotoHome}/>
+                screenSelected={2}/>
         <div className='postContainer'>
             <div className='imageBox'>
                 <img src={addPost} className='postImage'/>

@@ -44,15 +44,18 @@ const Topbar = ({navigation, screenSelected, gotoUser, gotoPlus, gotoHome}) => {
     }   
 
     const handleHomeClick = () => {
-        gotoHome();
+        // gotoHome();
+        navigation.navigate('FeastBook - Home');
     }
 
     const handlePlusClick = () => {
-        gotoPlus();
+        // gotoPlus();
+        navigation.navigate('FeastBook - Add Post');
     }
 
     const handleProfileClick = () => {
-        gotoUser();
+        // gotoUser();
+        navigation.navigate('FeastBook - Profile');
     }
 
 

@@ -3,12 +3,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import React, {useState, createRef} from 'react';
-import feastbook from './web-frontend/assets/feastbook.png';
 
 import LoginScreen from './web-frontend/components/LoginScreen'
 import RegisterScreen from './web-frontend/components/RegisterScreen'
 import HomeScreen from './web-frontend/components/HomeScreen'
-import Navigator from './web-frontend/components/Navigator'
+import EmailConfirmation from './web-frontend/components/EmailConfirmation';
+import AddPost from './web-frontend/components/AddPost';
+import Profile from './web-frontend/components/Profile';
+
 
 const Stack = createStackNavigator();
 
@@ -26,9 +28,53 @@ const Auth = () => {
     return null;
   }
 
-  return (
-    <Navigator userToken={userToken} setUserToken={setUserToken}/>
-  );
+  if(userToken != null)
+  {
+    return (
+        <Stack.Navigator initialRouteName='LoginScreen'>              
+          <Stack.Screen
+            name="FeastBook - Login"
+            // component={LoginScreen}
+            options={{headerShown: false}}>
+            {(props) => <LoginScreen {...props} setReturnToken={setUserToken} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name="FeastBook - Register"
+            component={RegisterScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FeastBook - ConfirmEmail"
+            component={EmailConfirmation} 
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator> 
+    );
+  }
+  else 
+  {
+    return (
+        // <Stack.Navigator initialRouteName='HomeScreen'>
+        <Stack.Navigator>
+          <Stack.Screen
+              name="FeastBook - Home"
+              options={{headerShown: false}}>
+              {(props) => <HomeScreen {...props} userToken={userToken} />}
+          </Stack.Screen>
+          <Stack.Screen
+              name='FeastBook - Add Post'
+              options={{headerShown: false}}>
+              {(props) => <AddPost {...props} userToken={userToken} />}
+          </Stack.Screen>
+          <Stack.Screen
+              name='FeastBook - Profile' 
+              options={{headerShown: false}}>
+              {(props) => <Profile {...props} userToken={userToken} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+    );
+  }
+
 };
 
 const App = () => {
