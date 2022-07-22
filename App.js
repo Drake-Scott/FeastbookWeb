@@ -10,15 +10,14 @@ import HomeScreen from './web-frontend/components/HomeScreen'
 import EmailConfirmation from './web-frontend/components/EmailConfirmation';
 import AddPost from './web-frontend/components/AddPost';
 import Profile from './web-frontend/components/Profile';
+import LikedPosts from './web-frontend/components/LikedPosts';
 
 
 const Stack = createStackNavigator();
 
-// if userToken is null, assume user is logged out.
-// var userToken = null;
-
 const Auth = () => {
-  const[userToken, setUserToken] = useState(null);
+  //CHANGE THIS BACK TO NULL
+  const[userToken, setUserToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:""}); 
   const [loaded] = useFonts({
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
@@ -26,9 +25,9 @@ const Auth = () => {
 
   if (!loaded) {
     return null;
-  }
+  }  
 
-  if(userToken != null)
+  if(userToken === null)
   {
     return (
         <Stack.Navigator initialRouteName='LoginScreen'>              
@@ -65,6 +64,11 @@ const Auth = () => {
               name='FeastBook - Add Post'
               options={{headerShown: false}}>
               {(props) => <AddPost {...props} userToken={userToken} />}
+          </Stack.Screen>
+          <Stack.Screen
+              name='FeastBook - Likes'
+              options={{headerShown: false}}>
+              {(props) => <LikedPosts {...props} userToken={userToken} />}
           </Stack.Screen>
           <Stack.Screen
               name='FeastBook - Profile' 

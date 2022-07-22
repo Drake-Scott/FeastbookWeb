@@ -49,7 +49,8 @@ const LoginScreen = ({navigation, setReturnToken}) => {
             console.log("Response Json: " + JSON.stringify(responseJson));
             if (responseJson.id != -1) {
                 console.log("here");
-                setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
+                // setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
+                setReturnToken(responseJson); 
             }
             else {
                 setErrortext(responseJson.msg); 

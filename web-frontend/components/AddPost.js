@@ -20,7 +20,8 @@ const AddPost = ({navigation, userToken}) => {
   return (
     <>
         <Topbar navigation={navigation} 
-                screenSelected={2}/>
+                screenSelected={2}
+                searchData={null}/>
         <div className='postContainer'>
             <div className='imageBox'>
                 <img src={addPost} className='postImage'/>

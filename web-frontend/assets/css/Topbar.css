@@ -9,7 +9,7 @@
 }
 
 .topbarLeft {
-    flex: 3;
+    flex: 33%;
 }
 
 .logo {
@@ -22,8 +22,14 @@
 }
 
 .topbarCenter {
-    flex: 5;
+    position: fixed;
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 40%;
 }
+
+
 
 .searchBar {
     width: 100%;
@@ -46,8 +52,23 @@
     outline: none;
 }
 
+.searchResultsContainer {
+    cursor: pointer;
+}
+
+.searchResult {
+    cursor: pointer;
+    background-color: white;
+    width: 80%;
+    margin-left: 9%;
+    margin-bottom: .5%;
+    padding: 2%;
+    border-color: #0F4C75;
+    
+}
+
 .topbarRight {
-    flex: 4;
+    flex: 33%;
     display: flex;
     align-items: center;
     justify-content: space-around;
