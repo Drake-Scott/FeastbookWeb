@@ -4,7 +4,7 @@ import '../assets/css/LikedPosts.css'
 import cancelIcon from '../assets/icons/cancel.png'
 import { Container, Row, Col, Modal } from 'react-bootstrap';
 
-const LikedPosts = ({navigation, userToken}) => {
+const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken}) => {
 
     const [loading, setLoading] = useState(false);
     const [postResults, setPostResults] = useState([]);
@@ -34,9 +34,7 @@ const LikedPosts = ({navigation, userToken}) => {
                 }
                 arr.push(temp);
             }
-            console.log(arr[0]);
             setPostResults(arr);
-            console.log(postResults);
         })
         .catch((error) => {
             console.error(error);
@@ -48,14 +46,14 @@ const LikedPosts = ({navigation, userToken}) => {
     const handleShow = () => setShow(true);
 
     const showPosts = (post) => {
-    console.log(post);
-    setSelectedPost(post);
-    handleShow();
+      setSelectedPost(post);
+      handleShow();
     }
 
     return (
     <div className='background'>
-        <Topbar navigation={navigation} screenSelected={4}/>
+        <Topbar navigation={navigation} screenSelected={3} 
+        setUserToken={setUserToken} setVisitToken={setVisitToken}/>
         <Modal show={show} onHide={handleClose} className='modalContainer'>
         <Modal.Header className='modalHeader'>
           <Modal.Title className='modalTitle'>

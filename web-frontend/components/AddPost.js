@@ -14,14 +14,12 @@ import {
     ScrollView,
   } from 'react-native';
 
-const AddPost = ({navigation, userToken}) => {
-    console.log('in AddPost: usertoken = ' + JSON.stringify(userToken));
+const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
 
   return (
     <>
-        <Topbar navigation={navigation} 
-                screenSelected={2}
-                searchData={null}/>
+        <Topbar navigation={navigation} screenSelected={2} 
+        setUserToken={setUserToken} setVisitToken={setVisitToken}/>
         <div className='postContainer'>
             <div className='imageBox'>
                 <img src={addPost} className='postImage'/>

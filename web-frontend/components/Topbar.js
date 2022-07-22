@@ -6,9 +6,13 @@ import plus from '../assets/icons/plus.png'
 import plusFilled from '../assets/icons/plusFilled.png'
 import user from '../assets/icons/user.png'
 import userFilled from '../assets/icons/userFilled.png'
-import searchIcon from '../assets/icons/search.png'
+import logoutIcon from '../assets/icons/logout.png'
+import SearchBar from './SearchBar';
 
-const Topbar = ({navigation, screenSelected}) => {
+import { Container, Row, Col, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { unmountComponentAtNode } from 'react-dom';
+
+const Topbar = ({navigation, screenSelected, setUserToken, setVisitToken}) => {
 
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -36,11 +40,11 @@ const Topbar = ({navigation, screenSelected}) => {
                 plusIcon = plus;
                 userIcon = userFilled;
                 break;
-            // Favorites selected
+            // visited user selected
             case 4: 
                 homeIcon = home;
                 plusIcon = plus;
-                userIcon = userFilled;
+                userIcon = user;
                 break;
         }
     }  
@@ -57,104 +61,88 @@ const Topbar = ({navigation, screenSelected}) => {
     const handleProfileClick = () => {
         navigation.navigate('FeastBook - Profile');
     }
-
-    const handleSearch = () => {
-        let dataToSend = {
-            search: search
-        }
-        let s = JSON.stringify(dataToSend);
-        console.log(s);
-        fetch('http://localhost:5000/api/searchuser', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: s,
-        })
-        .then((response) => response.json())
-        .then((response) => {
-            setLoading(false);
-            let arr = [];
-            for (let i = 0; i < 10; i++) {
-                if (typeof(response.results[i]) !== 'undefined') {
-                    let temp = {
-                        username: response.results[i].login,
-                        id: response.results[i].id
-                    }
-                    arr.push(temp)
-                }
-                else break;
-            }
-            arr.sort((a, b) => a.username.localeCompare(b.username, undefined, {sensitivity: 'base'}));
-            setSearchResults(arr);
-            console.log(searchResults);
-        })
-        .catch((error) => {
-            setLoading(false);
-            console.error(error);
-        });
-    }
-
-    const visitProfile = () =>
-    {
-        console.log('visit profile id: ' + 1)
-    }
-
-    const handleInputBlur = () =>
-    {
-        setSearch(null);
-        console.log('input blur handler called. search = ' + search)
+    const handleLogoutClick = () => {
+        setUserToken(null);
     }
 
   return (
-    <>
-        <div className='topbarContainer'>
-            <div className='topbarLeft'>
-                <span className='logo'>FeastBook</span>
-            </div>
-            <div className='topbarCenter'>
-                <div className='searchContainer'
-                     onBlur={handleInputBlur} 
-                >
-                    <div className='searchBar'>
-                        <img src={searchIcon} className='searchIcon'/>
-                        <input placeholder='Search...' 
-                               className='searchInput'
-                               type='text' 
-                               onChange={e => {setSearch(e.target.value)}}                                
-                               onKeyUp={handleSearch} 
-                        />
+    <div className='topbarContainer'>
+        <Container fluid>
+            <Row className='topbarRow'>
+                <Col className='topbarLeft' md={3}>
+                    <span className='logo'>FeastBook</span>
+                </Col>
+                <Col className='topbarCenter' md={6}>
+                    <SearchBar className='topbarSearch' setVisitToken={setVisitToken} navigation={navigation}/>
+                </Col>
+                <Col className='topbarRight' md={3}>
+                    <div className='topbarIcons'>
+                        <div className='topbarIconItem'>
+                            <img src={homeIcon} onClick={handleHomeClick}/>
+                        </div>
+                        <div className='topbarIconItem'>
+                            <img src={userIcon} onClick={handleProfileClick}/>
+                        </div>
+                        <div className='topbarIconItem'>
+                            <img src={plusIcon} onClick={handlePlusClick}/>
+                        </div>
+                        <div className='topbarIconItem'>
+                            <img src={logoutIcon} onClick={handleLogoutClick}/>
+                        </div>
                     </div>
-                    <div className='searchResultsContainer'>
-                        {searchResults.map(user => {
-                            return (<button 
-                                        key={user.id}
-                                        className='searchResult'
-                                        onClick={() => {visitProfile}}
-                                    >
-                                            {user.username}
-                                    </button>)
-                        })}
-                    </div>
-                </div>
-            </div>
-            <div className='topbarRight'>
-                <div className='topbarIcons'>
-                    <div className='topbarIconItem'>
-                        <img src={homeIcon} onClick={handleHomeClick}/>
-                    </div>
-                    <div className='topbarIconItem'>
-                        <img src={userIcon} onClick={handleProfileClick}/>
-                    </div>
-                    <div className='topbarIconItem'>
-                        <img src={plusIcon} onClick={handlePlusClick}/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </>
+                </Col>
+            </Row>
+        </Container>
+    </div>
+
   )
 }
 
 export default Topbar
+
+    // <>
+    //     <div className='topbarContainer'>
+    //         <div className='topbarLeft'>
+    //             <span className='logo'>FeastBook</span>
+    //         </div>
+    //         <div className='topbarCenter'>
+    //             <div className='searchContainer'
+    //                  onBlur={handleInputBlur} 
+    //             >
+    //                 <div className='searchBar'>
+    //                     <img src={searchIcon} className='searchIcon'/>
+    //                     <input placeholder='Search...' 
+    //                            className='searchInput'
+    //                            type='text' 
+    //                            onChange={e => {setSearch(e.target.value)}}                                
+    //                            onKeyUp={handleSearch} 
+    //                     />
+    //                 </div>
+    //                 <div className='searchResultsContainer'>
+    //                     {searchResults.map(user => {
+    //                         return (<button 
+    //                                     key={user.id}
+    //                                     className='searchResult'
+    //                                     onClick={() => {visitProfile}}
+    //                                 >
+    //                                         {user.username}
+    //                                 </button>)
+    //                     })}
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div className='topbarRight'>
+    //             <div className='topbarIcons'>
+    //                 <div className='topbarIconItem'>
+    //                     <img src={homeIcon} onClick={handleHomeClick}/>
+    //                 </div>
+    //                 <div className='topbarIconItem'>
+    //                     <img src={userIcon} onClick={handleProfileClick}/>
+    //                 </div>
+    //                 <div className='topbarIconItem'>
+    //                     <img src={plusIcon} onClick={handlePlusClick}/>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </>

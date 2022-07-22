@@ -1,18 +1,28 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Topbar from './Topbar';
-import '../assets/css/Profile.css'
+import '../assets/css/Profile.css';
 import cancelIcon from '../assets/icons/cancel.png'
 import { Container, Row, Col, Modal } from 'react-bootstrap';
 
-const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
+const Visiting = ({navigation, userToken, setUserToken, visitToken, setVisitToken}) => {
 
   const [loading, setLoading] = useState(false);
   const [postResults, setPostResults] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
 
+
   useEffect(() => {
     setLoading(true);
-    let dataToSend = {id: userToken.id};
+    console.log("visit token id:" + visitToken.id);
+    console.log("user token id:" + userToken.id);
+    var idToSend;
+    // if(Number.isInteger(visitToken.id)){
+    //   idToSend = toString(visitToken.id);
+    // }
+    // else {
+    //   idToSend = visitToken;
+    // }
+    let dataToSend = {id: visitToken.id};
     var s = JSON.stringify(dataToSend)
     fetch('http://localhost:5000/api/userposts', {
         method: 'POST',
@@ -48,14 +58,15 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
   const handleShow = () => setShow(true);
 
   const showPosts = (post) => {
+    console.log(post);
     setSelectedPost(post);
     handleShow();
   }
 
   return (
     <div className='background'>
-      <Topbar navigation={navigation} screenSelected={3} 
-      setUserToken={setUserToken} setVisitToken={setVisitToken}/>
+      <Topbar navigation={navigation} screenSelected={4}
+      setUserToken={setUserToken} setVisitToken={setVisitToken} />
       <Modal show={show} onHide={handleClose} className='modalContainer'>
         <Modal.Header className='modalHeader'>
           <Modal.Title className='modalTitle'>
@@ -84,11 +95,12 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
           }
         </Modal.Body>
       </Modal> 
+      <div>
+        {JSON.stringify(visitToken)}
+      </div>
       <Container>
         <Row className='headerRow'>
-          <Col md={5} className='nameCell'>{userToken.firstname}</Col>
-          <Col md={{span : 5, offset: 2}} className='favoritesCell'
-                onClick={() => navigation.navigate('FeastBook - Likes')}>Liked</Col>
+          <Col md={5} className='nameCell'>{visitToken.username}</Col>
         </Row>
         <Row className='postsRow'>            
           {postResults.length > 0 ? 
@@ -106,4 +118,4 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
   )
 }
 
-export default Profile
+export default Visiting

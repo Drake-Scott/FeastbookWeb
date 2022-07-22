@@ -1,0 +1,43 @@
+.searchContainter {
+    z-index: 30;
+}
+
+.searchBar {
+    margin-top: .8%;
+    width: 100%;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon {
+    margin-left: 1%;
+}
+
+.searchInput {
+    border: none;
+    
+    width: 80%;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchResultsContainer {
+    cursor: pointer;
+}
+
+.searchResult {
+    font-family: MontserratSB;
+    cursor: pointer;
+    background-color: white;
+    color: #0F4C75;
+    width: 80%;
+    margin-left: 9%;
+    margin-bottom: .1%;
+    padding: 2%;
+    border-color: #0F4C75;
+    
+}

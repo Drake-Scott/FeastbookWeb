@@ -11,13 +11,16 @@ import EmailConfirmation from './web-frontend/components/EmailConfirmation';
 import AddPost from './web-frontend/components/AddPost';
 import Profile from './web-frontend/components/Profile';
 import LikedPosts from './web-frontend/components/LikedPosts';
+import Visiting from './web-frontend/components/Visiting';
+import Topbar from './web-frontend/components/Topbar';
 
 
 const Stack = createStackNavigator();
 
 const Auth = () => {
-  //CHANGE THIS BACK TO NULL
+  // const[userToken, setUserToken] = useState(null); 
   const[userToken, setUserToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:""}); 
+  const[visitToken, setVisitToken] = useState(null);
   const [loaded] = useFonts({
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
@@ -58,22 +61,32 @@ const Auth = () => {
           <Stack.Screen
               name="FeastBook - Home"
               options={{headerShown: false}}>
-              {(props) => <HomeScreen {...props} userToken={userToken} />}
+              {(props) => <HomeScreen {...props} userToken={userToken} setUserToken={setUserToken}
+              setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
               name='FeastBook - Add Post'
               options={{headerShown: false}}>
-              {(props) => <AddPost {...props} userToken={userToken} />}
+              {(props) => <AddPost {...props} userToken={userToken}setUserToken={setUserToken}
+              setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
               name='FeastBook - Likes'
               options={{headerShown: false}}>
-              {(props) => <LikedPosts {...props} userToken={userToken} />}
+              {(props) => <LikedPosts {...props} userToken={userToken} setUserToken={setUserToken}
+              setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
               name='FeastBook - Profile' 
               options={{headerShown: false}}>
-              {(props) => <Profile {...props} userToken={userToken} />}
+              {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
+              setVisitToken={setVisitToken}/>}
+          </Stack.Screen>
+          <Stack.Screen
+              name='FeastBook - Visiting' 
+              options={{headerShown: false}}>
+              {(props) => <Visiting {...props} userToken={userToken} setUserToken={setUserToken} 
+              visitToken={visitToken} setVisitToken={setVisitToken}/>}
           </Stack.Screen>
         </Stack.Navigator>
     );
