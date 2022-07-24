@@ -1,16 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react';
 import searchIcon from '../assets/icons/search.png'
+import cancelIcon from '../assets/icons/cancel.png'
+import './bootstrap/css/bootstrap-grid.min.css';
+import './bootstrap/css/bootstrap.min.css';
 import '../assets/css/Searchbar.css'
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 const SearchBar = ({navigation, setVisitToken}) => {
 
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const handleSearch = () => {
-        if(search === '') {setSearch(null)}
+        console.log("handling search");
         let dataToSend = {
             search: search
         }
@@ -49,23 +53,17 @@ const SearchBar = ({navigation, setVisitToken}) => {
     const visitProfile = (user) =>
     {
         setVisitToken(user);
-        console.log('visit token in searchbar: ' + JSON.stringify(user));
-        navigation.navigate('FeastBook - Visiting');
+        console.log('visit token called: ' + JSON.stringify(user));
+        navigation.replace('FeastBook - Visiting');
     }
-
-    return (
-        <div className='searchContainer'>
-            <div className='searchBar' >
-                <img src={searchIcon} className='searchIcon'/>
-                <input placeholder='Search...' 
-                    className='searchInput'
-                    type='text' 
-                    onChange={e => {setSearch(e.target.value)}}                                
-                    onKeyUp={handleSearch} 
-                />
-            </div>
+    
+    const popover = (
+        <Popover id='pop' className='popper'>
+            <Popover.Body>
+            {searchResults != 0 && (
             <div className='searchResultsContainer'>
-                {searchResults.map(user => {
+                {
+                searchResults.map(user => {
                     return (
                         <div    key={user.id}
                                 className='searchResult'
@@ -75,6 +73,56 @@ const SearchBar = ({navigation, setVisitToken}) => {
                     )
                 })}
             </div>
+            )}
+            </Popover.Body>
+        </Popover>
+    );
+
+    const initSearch = () =>
+    {
+        console.log("init search called")
+    }
+
+    const wipeSearch = () =>
+    {
+        console.log("wipe search called")
+        setSearch('');
+        setTimeout(() => setSearchResults([]), 500);
+    }
+
+    return (
+        <div className='searchContainer'>
+            {/* <div className='searchBar' onBlur={wipeSearch} onFocus={initSearch}> */}
+            <OverlayTrigger trigger='focus' placement='bottom-start' overlay={popover}>
+                <div className='searchBar' 
+                onBlur={wipeSearch} onFocus={initSearch}>
+                    <img src={searchIcon} className='searchIcon'/>
+                    <input placeholder='Search...' 
+                        className='searchInput'
+                        type='text'
+                        onChange={event => {setSearch(event.target.value)}} 
+                        onKeyUp={handleSearch}
+                        value={search}
+                    />
+                </div>
+            </OverlayTrigger>
+            {/* <Modal show={show}>
+
+            </Modal> */}
+            {/* {searchResults != 0 && (
+            <div className='searchResultsContainer'>
+                {
+                searchResults.map(user => {
+                    return (
+                        <div    key={user.id}
+                                className='searchResult'
+                                onClick={() => visitProfile(user)}>
+                            {user.username}
+                        </div>
+                    )
+                })}
+            </div>
+            )}   */}
         </div>
   )
 }

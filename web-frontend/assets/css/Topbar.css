@@ -30,14 +30,14 @@
     /* background-color: #0F4C75; */
     overflow: visible;
     justify-content: center;
+    align-items: center;
 }
 
 
 .topbarRight {
-    /* border: 2px solid red; */
     display: flex;
-    /* align-items: center;
-    justify-content: space-around; */
+    align-items: center;
+    /* justify-content: center; */
 }
 
 .topbarIcons {

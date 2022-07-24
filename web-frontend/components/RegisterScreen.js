@@ -11,13 +11,12 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import EmailConfirmation from './EmailConfirmation';
-// import { response } from 'express';
+import { Container, Row, Col, Modal, Tabs, Tab, Alert, Button } from 'react-bootstrap';
+
 
 
 const LoginScreen = ({navigation}) => {
 
-    console.log("in register.")
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
@@ -28,6 +27,7 @@ const LoginScreen = ({navigation}) => {
     const [errortext, setErrortext] = useState('');
     const [showModal, setShowModal] = useState(false);
     const passwordInputRef = createRef();
+    const [show, setShow] = useState(false);    //confirm email modal
 
 
     const handleSubmitPress = () => {
@@ -81,7 +81,8 @@ const LoginScreen = ({navigation}) => {
             console.log(responseJson);
             
             if (responseJson.added === true) {
-                navigation.navigate('FeastBook - ConfirmEmail');
+                //show the modal
+                handleShow();
             }
             else {
                 setErrortext(responseJson.error);
@@ -94,21 +95,25 @@ const LoginScreen = ({navigation}) => {
         });
     }
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <ScrollView style={{flex:1, backgroundColor: '#fff'}}>
-            
-            {showModal ? 
-                <EmailConfirmation showModal={showModal} setShowModal={setShowModal}/> 
-            : null}
             <View style = {styles.mainBody}>
                 <View style={styles.header}>
                     <Text style={styles.heading}>FeastBook</Text>
                 </View>
-
                 <View>
                     <Text style={styles.sloganText}>Connect with friends and share your culinary creations with the world</Text>
                 </View>
+                <Modal show={show} onHide={handleClose}>
+                    <div>Thank you for Registering</div>
+                    <div>Click the link in your email to finalize account creation</div>
 
+                    <label>Ready to log in?</label>
+                    <Button onClick={() => navigation.replace("FeastBook - Login")} variant="success"></Button>
+                </Modal>
                 <View style={{flexDirection:'row', flexWrap:'wrap', alignSelf:'center'}}>
                     <Image source={feastbook} style={{width: 300, height: 600}}/>
                     

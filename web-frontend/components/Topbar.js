@@ -9,8 +9,7 @@ import userFilled from '../assets/icons/userFilled.png'
 import logoutIcon from '../assets/icons/logout.png'
 import SearchBar from './SearchBar';
 
-import { Container, Row, Col, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { unmountComponentAtNode } from 'react-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Topbar = ({navigation, screenSelected, setUserToken, setVisitToken}) => {
 
@@ -53,13 +52,13 @@ const Topbar = ({navigation, screenSelected, setUserToken, setVisitToken}) => {
 
     // Top right navigation icons.
     const handleHomeClick = () => {
-        navigation.navigate('FeastBook - Home');
+        navigation.replace('FeastBook - Home');
     }
     const handlePlusClick = () => {
-        navigation.navigate('FeastBook - Add Post');
+        navigation.replace('FeastBook - Add Post');
     }
     const handleProfileClick = () => {
-        navigation.navigate('FeastBook - Profile');
+        navigation.replace('FeastBook - Profile');
     }
     const handleLogoutClick = () => {
         setUserToken(null);
@@ -99,50 +98,3 @@ const Topbar = ({navigation, screenSelected, setUserToken, setVisitToken}) => {
 }
 
 export default Topbar
-
-    // <>
-    //     <div className='topbarContainer'>
-    //         <div className='topbarLeft'>
-    //             <span className='logo'>FeastBook</span>
-    //         </div>
-    //         <div className='topbarCenter'>
-    //             <div className='searchContainer'
-    //                  onBlur={handleInputBlur} 
-    //             >
-    //                 <div className='searchBar'>
-    //                     <img src={searchIcon} className='searchIcon'/>
-    //                     <input placeholder='Search...' 
-    //                            className='searchInput'
-    //                            type='text' 
-    //                            onChange={e => {setSearch(e.target.value)}}                                
-    //                            onKeyUp={handleSearch} 
-    //                     />
-    //                 </div>
-    //                 <div className='searchResultsContainer'>
-    //                     {searchResults.map(user => {
-    //                         return (<button 
-    //                                     key={user.id}
-    //                                     className='searchResult'
-    //                                     onClick={() => {visitProfile}}
-    //                                 >
-    //                                         {user.username}
-    //                                 </button>)
-    //                     })}
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         <div className='topbarRight'>
-    //             <div className='topbarIcons'>
-    //                 <div className='topbarIconItem'>
-    //                     <img src={homeIcon} onClick={handleHomeClick}/>
-    //                 </div>
-    //                 <div className='topbarIconItem'>
-    //                     <img src={userIcon} onClick={handleProfileClick}/>
-    //                 </div>
-    //                 <div className='topbarIconItem'>
-    //                     <img src={plusIcon} onClick={handlePlusClick}/>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </>

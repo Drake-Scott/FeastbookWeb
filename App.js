@@ -17,10 +17,13 @@ import Topbar from './web-frontend/components/Topbar';
 
 const Stack = createStackNavigator();
 
+
 const Auth = () => {
   // const[userToken, setUserToken] = useState(null); 
   const[userToken, setUserToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:""}); 
+  // const[visitToken, setVisitToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:"",username:'Tuo'});
   const[visitToken, setVisitToken] = useState(null);
+  const[likedPosts, setLikedPosts] = useState([])
   const [loaded] = useFonts({
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
@@ -38,7 +41,8 @@ const Auth = () => {
             name="FeastBook - Login"
             // component={LoginScreen}
             options={{headerShown: false}}>
-            {(props) => <LoginScreen {...props} setReturnToken={setUserToken} />}
+            {(props) => <LoginScreen {...props} setReturnToken={setUserToken} 
+            setLikedPosts={setLikedPosts}/>}
           </Stack.Screen>
           <Stack.Screen
             name="FeastBook - Register"
@@ -56,37 +60,37 @@ const Auth = () => {
   else 
   {
     return (
-        // <Stack.Navigator initialRouteName='HomeScreen'>
         <Stack.Navigator>
           <Stack.Screen
-              name="FeastBook - Home"
-              options={{headerShown: false}}>
-              {(props) => <HomeScreen {...props} userToken={userToken} setUserToken={setUserToken}
-              setVisitToken={setVisitToken}/>}
+            name="FeastBook - Home"
+            options={{headerShown: false}}>
+            {(props) => <HomeScreen {...props} userToken={userToken} setUserToken={setUserToken}
+            setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
-              name='FeastBook - Add Post'
-              options={{headerShown: false}}>
-              {(props) => <AddPost {...props} userToken={userToken}setUserToken={setUserToken}
-              setVisitToken={setVisitToken}/>}
+            name='FeastBook - Profile' 
+            options={{headerShown: false}}>
+            {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
+            setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
-              name='FeastBook - Likes'
-              options={{headerShown: false}}>
-              {(props) => <LikedPosts {...props} userToken={userToken} setUserToken={setUserToken}
-              setVisitToken={setVisitToken}/>}
+            name='FeastBook - Add Post'
+            options={{headerShown: false}}>
+            {(props) => <AddPost {...props} userToken={userToken}setUserToken={setUserToken}
+            setVisitToken={setVisitToken}/>}
           </Stack.Screen>
           <Stack.Screen
-              name='FeastBook - Profile' 
-              options={{headerShown: false}}>
-              {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
-              setVisitToken={setVisitToken}/>}
+            name='FeastBook - Likes'
+            options={{headerShown: false}}>
+            {(props) => <LikedPosts {...props} userToken={userToken} setUserToken={setUserToken}
+            setVisitToken={setVisitToken} likedPosts={likedPosts} setLikedPosts={setLikedPosts}/>}
           </Stack.Screen>
           <Stack.Screen
-              name='FeastBook - Visiting' 
-              options={{headerShown: false}}>
-              {(props) => <Visiting {...props} userToken={userToken} setUserToken={setUserToken} 
-              visitToken={visitToken} setVisitToken={setVisitToken}/>}
+            name='FeastBook - Visiting' 
+            options={{headerShown: false}}>
+            {(props) => <Visiting {...props} userToken={userToken} setUserToken={setUserToken} 
+            visitToken={visitToken} setVisitToken={setVisitToken} likedPosts={likedPosts}
+            setLikedPosts={setLikedPosts}/>}
           </Stack.Screen>
         </Stack.Navigator>
     );

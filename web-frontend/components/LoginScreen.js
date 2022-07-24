@@ -1,4 +1,4 @@
-import React, {useState, createRef} from 'react';
+import React, {useState, createRef, useRef} from 'react';
 import feastbook from '../assets/feastbook.png';
 import {
   StyleSheet,
@@ -12,14 +12,13 @@ import {
   ScrollView,
 } from 'react-native';
 
-const LoginScreen = ({navigation, setReturnToken}) => {
+const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errortext, setErrortext] = useState('');
 
     const passwordInputRef = createRef();
-    // console.log("in LoginScreen: usertoken = " + userToken);
 
     const handleSubmitPress = () => {
         setErrortext('');
@@ -44,13 +43,15 @@ const LoginScreen = ({navigation, setReturnToken}) => {
         })
         .then((response) => response.json())
         .then((responseJson) => {
-            setLoading(false);
             console.log(responseJson);
             console.log("Response Json: " + JSON.stringify(responseJson));
             if (responseJson.id != -1) {
                 console.log("here");
                 // setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
+                createLikesArr(responseJson.id);
+                setLoading(false);
                 setReturnToken(responseJson); 
+
             }
             else {
                 setErrortext(responseJson.msg); 
@@ -63,10 +64,34 @@ const LoginScreen = ({navigation, setReturnToken}) => {
         });
     }
 
+    function createLikesArr(userid) {
+        let dataToSend = {userid: userid};
+        var s = JSON.stringify(dataToSend)
+        fetch('http://localhost:5000/api/getfavorite', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: s,
+        })
+        .then((response) => response.json())
+        .then((response) => {
+            let arr = [];
+            for (let i = 0; i < response.results.length; i++) {
+                arr.push(response.results[i]._id);
+            }
+            setLikedPosts(arr);
+            console.log( "called setLikedPosts on arr");
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     const handleForgotPassword = () => {
         console.log("forgot password clicked")
     }
-    console.log("in login.")
 
     return (
         <ScrollView style={{flex:1, backgroundColor: '#fff'}}>
