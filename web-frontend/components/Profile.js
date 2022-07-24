@@ -95,7 +95,7 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
       <Modal show={show} onHide={handleClose} className='modalContainer'>
       <Alert variant='danger' show={showAlert} className='delAlert'>
         <Alert.Heading>
-          Are you sure you want to PERMANANTLY DELETE <br/>{selectedPost !== null ? selectedPost.name : "this post"}?
+          Are you sure you want to PERMANENTLY DELETE <br/>{selectedPost !== null ? selectedPost.name : "this post"}?
         </Alert.Heading>
         <hr/>
         <div className="d-flex justify-content-lg-between">
@@ -125,10 +125,12 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
                 <Tabs
                   defaultActiveKey="ingredients"
                   id="postTabs"
-                  className="mb-3"
+                  className="tabs"
                 >
                   <Tab eventKey="ingredients" title="Ingredients" className='ingTab'>
-                    {selectedPost.ingredients}
+                    <div className='ingTabText'>
+                      {selectedPost.ingredients}
+                    </div>
                   </Tab>
                   <Tab eventKey="directions" title="Directions" className='dirTab'>
                     {selectedPost.directions}

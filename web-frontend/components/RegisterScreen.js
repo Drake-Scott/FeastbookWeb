@@ -1,5 +1,7 @@
 import React, {useState, createRef} from 'react';
 import feastbook from '../assets/feastbook.png';
+import './bootstrap/css/bootstrap-grid.min.css';
+import './bootstrap/css/bootstrap.min.css';
 import {
   StyleSheet,
   TextInput,

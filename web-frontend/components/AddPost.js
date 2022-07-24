@@ -54,10 +54,7 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
     });
 
     const fileUploadHandler = () => {
-        // console.log("selectedFile64: " + selectedFile64)
-        // console.log("inputName: \n" + inputName);
-        // console.log("inputIngredients: \n" + inputIng);
-        // console.log("inputDirections: \n" + inputDir);
+    
         setErrortext('');
         if (!selectedFile64) {
             alert('Image required');
@@ -75,8 +72,16 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
             alert('Directions required');
             return;
         }
+
+        // var ingString;
+        // ingString = inputIng;
+        // ingString = ingString.replace(/\r?\n/g, '<br />');
+        // var dirString;
+        // dirString = inputDir;
+        // dirString = dirString.replace(/\r?\n/g, '<br />');
+
         setLoading(true);
-        let dataToSend = {userid: userToken.id, name:inputName, photo: selectedFile64, ingredients: inputIng, directions: inputDir};
+        let dataToSend = {userid: userToken.id, name:inputName, photo: selectedFile64, ingredients: inputIng, directions: inputIng};
         var s = JSON.stringify(dataToSend)
         // console.log(s);
         fetch('http://localhost:5000/api/createpost', {
@@ -131,12 +136,18 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
                         </Col>
                     </Row>
                     <Row className='postDetailsRow'>
-                        <Col className='postImageCol'>
-                            <label>Upload an Image</label><br/>
-                            <img src={image} className='postImg'/><br/>                  
-                            <input type='file' onChange={fileSelectedHandler} ref={nameRef}/>
+                        <Col className='postImageCol' md={4}>
+                            <Row className='postImageRow'>
+                                <div>
+                                    <label>Upload an Image</label><br/>
+                                    <img src={image} className='postImg'/>
+                                </div>  
+                            </Row>      
+                            <Row className='imgSelectionRow'>        
+                                <input type='file' onChange={fileSelectedHandler} ref={nameRef}/>
+                            </Row>
                         </Col>
-                        <Col className='postInfoCol'>
+                        <Col className='postInfoCol' md={8}>
                             <Row className='postNameInputRow'>
                                 <div className='postNameCell'>
                                     <label>Dish Name</label><br/>
@@ -149,14 +160,14 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
                                     <div className='postInfoCell'>
                                         <label>Ingredients</label><br/>
                                         <textarea type='textarea' className='postInfoTextInput'
-                                        onChange={handleIngChange} ref={ingRef}/>
+                                        onChange={handleIngChange} ref={ingRef} wrap='hard'/>
                                     </div>
                                 </Col>
                                 <Col className='directionsInputCol'>
                                     <div className='postInfoCell'>
                                         <label>Directions</label><br/>
                                         <textarea type='textarea' className='postInfoTextInput'
-                                        onChange={handleDirChange} ref={dirRef}/>
+                                        onChange={handleDirChange} ref={dirRef} wrap='hard'/>
                                     </div>
                                 </Col>
                             </Row>

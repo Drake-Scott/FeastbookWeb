@@ -12,11 +12,11 @@
 .postContainer {
     font-family: MontserratSB;
     color: white;
+    /* margin-left: 15%; */
 }
 
 .postHeaderRow {
     margin-top: 5%;
-    /* max-width: fit-content; */
     justify-content: center;
     align-items: center;
 }
@@ -31,28 +31,34 @@ h3 {
 }
 
 .postDetailsRow {
-
+    /* border: 2px solid rgb(182, 40, 187); */
 }
 
 
 
 .postImageCol {
-    border: 2px solid rgb(40, 187, 109);
+    /* border: 2px solid rgb(40, 187, 109); */
     color: white;
-
+    justify-items: right;
 }
+.postImageRow {
+    justify-content: center;
+}
+.imgSelectionRow {
+    /* border: 2px solid rgb(196, 231, 41); */
+    margin-left: 6%;
+}
+
 .postImg {
     aspect-ratio: 4/4;
     min-width: 300px;
     min-height: 300px;
     max-width: 300px;
     max-height: 300px;
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
 .postInfoCol {
-    border: 2px solid rgb(196, 231, 41);
+    /* border: 2px solid rgb(196, 231, 41); */
 }
 
 

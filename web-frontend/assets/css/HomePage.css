@@ -4,17 +4,47 @@
 }
 
 .homeContainer {
-    margin-top: 1%;
+    /* margin-top: 1%; */
+}
+.allTheInfo{
+    /* background-color: aqua; */
+}
+.homePostHeaderRow {
+    /* border: 2px solid red; */
+    margin-top: 2%;
+    color: white;
+}
+.homeUserNameCol{
+    /* border: 2px solid green; */
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.homePostNameCol{
+    font-size: xx-large;
+    align-items: center;
+}
+
+.homePostContentRow {
+    /* border: 2px solid blue; */
+    /* margin-top: 2%; */
 }
 
 .homeImgCol {
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    max-width: fit-content;
     color: white;
 }
 
 .homeInfoCol {
-    border: 2px solid red;
+    /* border: 2px solid red; */
+    max-width: 100%;
+    overflow-x: scroll;
     color: white;
+}
+
+.homeInfotext {
+    white-space: pre-wrap;
 }
 
 .homePostImg {

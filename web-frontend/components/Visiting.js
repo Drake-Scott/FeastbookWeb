@@ -12,8 +12,9 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
   const [loading, setLoading] = useState(false);
   const [postResults, setPostResults] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [vLikedPosts, setVLikedPosts] = useState(likedPosts);
-
+  const [test, setTest] = useState(false);
+  const [likeIcon, setLikeIcon] = useState(like);
+  
 
 
   useEffect(() => {
@@ -54,9 +55,12 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
         console.error(error);
     });
   }
-  console.log("liked posts in visiting: " + likedPosts.length);
+  // console.log("liked posts in visiting: " + likedPosts.length);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false); 
+    setTimeout(setLikeIcon(like), 100);    
+  };
   const handleShow = () => setShow(true);
 
   const showPost = (post) => {
@@ -66,9 +70,9 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
   }
 
   const likesHandler = (postid) => {
-    
-    if(likedPosts.length > 0 && likedPosts.includes(postid)) handleDislike();
-    else if(likedPosts.length <= 0 || !likedPosts.includes(postid))handleLike();
+    // if(likedPosts.length > 0 && likedPosts.includes(postid)) handleDislike();
+    // else if(likedPosts.length <= 0 || !likedPosts.includes(postid))handleLike();
+    handleLike();
   }
 
   const handleLike = () => {
@@ -87,10 +91,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
     })
     .then((response) => response.json())
     .then((response) => {
-      let test = likedPosts.push(selectedPost.id);
-      if(displayFavorites !== null) displayFavorites; //if an instance of liked page is open, update the display
-      setLikedPosts(test)
-      console.log("LikedPosts after pushing: " + likedPosts);
+      setLikeIcon(likeF);
       console.log(response);
     })
     .catch((error) => {
@@ -136,7 +137,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
             <Row className='modalHeaderRow'>
               <Col xs={9} className="modalHeaderCol1">{selectedPost.name}</Col>
               <Col className="modalHeaderCol2">
-                <img src={likedPosts.includes(selectedPost.id) ? likeF : like} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
+                <img src={likeIcon} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
                 <img src={cancelIcon} onClick={handleClose} className='vCancelIcon'/>
               </Col>
             </Row>

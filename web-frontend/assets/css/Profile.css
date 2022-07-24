@@ -50,11 +50,11 @@
 }
 
 .modalContainer {
-    position: fixed;
     width: 300%;
     height: 100%;
-    left: 50%;
-    top: 50%;
+    position: fixed;
+    left: 44%;
+    top: 60%;
     transform: translate(-50%, -50%);
 }
 
@@ -84,17 +84,25 @@
     margin-top: 1%;
 }
 
+.infoHalf {
+    max-width: 53%;
+}
+
 .ingTab {
     /* background-color: palevioletred; */
+    /* outline: 2px solid red; */
     width: 100%;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
+
 .dirTab {
-    /* background-color: palevioletred; */
-    width: 100%;
+    /* outline: 2px solid red; */
+    max-width: 100%;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .cancelIcon {
