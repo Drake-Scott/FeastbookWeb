@@ -46,9 +46,8 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
             console.log(responseJson);
             console.log("Response Json: " + JSON.stringify(responseJson));
             if (responseJson.id != -1) {
-                console.log("here");
                 // setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
-                createLikesArr(responseJson.id);
+                createLikesArr(responseJson.id, responseJson.token);
                 setLoading(false);
                 setReturnToken(responseJson); 
             }
@@ -63,14 +62,16 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
         });
     }
 
-    function createLikesArr(userid) {
+    function createLikesArr(userid, authToken) {
+        console.log("token from login: " + authToken);
         let dataToSend = {userid: userid};
         var s = JSON.stringify(dataToSend)
         fetch('https://feastbook.herokuapp.com/api/getfavorite', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json, text/plain, /',
-                // 'Accept': 'application/json',
+                'Authorization': 'Bearer ' + authToken,
+                //'Accept': 'application/json, text/plain, */*',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: s,

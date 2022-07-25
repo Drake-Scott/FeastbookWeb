@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import './bootstrap/css/bootstrap-grid.min.css';
 import './bootstrap/css/bootstrap.min.css';
 import '../assets/css/HomePage.css'
-import like from '../assets/icons/like.png'
-import likeF from '../assets/icons/likeFilled.png'
+import like from '../assets/icons/likePlusG.png'
+import likeF from '../assets/icons/likePlus.png'
 import Topbar from './Topbar';
 import { Container, Row, Col, Modal, Tabs, Tab } from 'react-bootstrap';
 
@@ -18,17 +18,19 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
     const [selectedPost, setSelectedPost] = useState(null);
     const [fetching, setFetching] = useState(false);
 
-    console.log("liked posts: " + likedPosts);
+    console.log("liked posts in homescreen: " + likedPosts);
 
     useEffect(() => {
         displayPosts();
       }, []);
 
     const displayPosts = () => {
+        console.log("usertoken in homescreen displayposts: " + userToken.token)
         setLoading(true)
         fetch('https://feastbook.herokuapp.com/api/posts', {
             method: 'GET',
             headers: {
+                'Authorization': 'Bearer ' + userToken.token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
@@ -66,7 +68,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
             fetch('https://feastbook.herokuapp.com/api/getuserinfo', {
                 method: 'POST',
                 headers: {
-                    //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
+                    'Authorization': 'Bearer ' + userToken.token,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
@@ -103,8 +105,9 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
           fetch('https://feastbook.herokuapp.com/api/getfavorite', {
               method: 'POST',
               headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + userToken.token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
               },
               body: s,
           })
@@ -130,7 +133,8 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
 
     const handleLikePress = (item) => {
         if(likedPosts.includes(item.id)) {
-            dislikePost(item.id);
+            // dislikePost(item.id);
+            console.log("Home line 137: cannot dislike");
         }
         else {
             likePost(item);
@@ -138,35 +142,39 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
     }
 
     const dislikePost = (id) => {
-        // let removalIndex = likedPosts.indexOf(id);
-        // let retArr = likedPosts.splice(removalIndex, 1);
-        // setLikedPosts(likedPosts.filter((_, i) => i !== index));
-        // let dataToSend = {userid: userToken.id, postid: id};
-        // var s = JSON.stringify(dataToSend)
-        // console.log(s);
-        // fetch('https://feastbook.herokuapp.com/api/dislikepost', {
-        //     method: 'POST',
-        //     headers: {
-        //         //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: s,
-        // })
-        // .then((response) => response.json())
-        // .then((response) => {
-        //     console.log(response)
-        //     console.log(likedPosts)
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        // });
+
+        let retArr = likedPosts.map((x) => x);
+        let removalIndex = likedPosts.indexOf(id);
+        retArr.splice(removalIndex, 1);
+        setLikedPosts(retArr);
+
+ 
+        let dataToSend = {userid: userToken.id, postid: id};
+        var s = JSON.stringify(dataToSend)
+        console.log(s);
+        fetch('https://feastbook.herokuapp.com/api/dislikepost', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken.token,
+                //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: s,
+        })
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response)
+            console.log(likedPosts)
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 
     const likePost = (item) => {
         console.log("calling likePost in HomeScreen")
         setLikedPosts([...likedPosts, item.id]);
-        item.likes = item.likes++;
 
         let dataToSend = {userid: userToken.id, postid: item.id};
         var s = JSON.stringify(dataToSend)
@@ -174,6 +182,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
         fetch('https://feastbook.herokuapp.com/api/likepost', {
             method: 'POST',
             headers: {
+                'Authorization': 'Bearer ' + userToken.token,
                 //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -190,7 +199,14 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
     }
 
     const visitOtherUser = (item) => {
-
+        console.log("check check" + item.posterName)
+        let tempObject = {
+            id: item.posterId,
+            username: item.posterName
+        }
+        setVisitToken(tempObject);
+        console.log('visit token called: ' + item.posterId);
+        navigation.replace('Visiting');
     }
 
 
@@ -207,7 +223,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
                             {item.name}
                         </Col>
                         <Col className='homeUserNameCol' md={4}>
-                            <div onClick={() => visitOtherUser(item)}>
+                            <div onClick={() => visitOtherUser(item)}  className='posterName'>
                                 Poster: {item.posterName}
                             </div>
                         </Col>                        
@@ -243,9 +259,6 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
                             </div> */}
                         </Col>
                         <Col className='homeLikesCol' md={1}>
-                            <Row className='homeLikesRow'>
-                                +{item.likes}
-                            </Row>
                             <Row className='homeLikesRow'>                                
                                 <img src={
                                     likedPosts.includes(item.id) ? likeF : like} 

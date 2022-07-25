@@ -8,8 +8,19 @@ const ResetPassword = ({navigation}) => {
   return (
     <Container>
         <Row className='resetHeaderRow'> HELLO </Row>
-        <Row className='resetInputRow'> HELLO </Row>
-        <Row className='resetFooterRow'> HELLO </Row>
+        <Row className='resetInputRow'>
+          <div>
+            <label>Type Password</label>
+            <input type='password' placeholder='password'/>
+          </div>
+          <div>
+            <label>Reset Password</label>
+            <input type='password' placeholder='password'/>
+          </div>
+        </Row>
+        <Row className='resetFooterRow'>
+          <Button>Click here to do it</Button>
+        </Row>
     </Container>
   )
 }

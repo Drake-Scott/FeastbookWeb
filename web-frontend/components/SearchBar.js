@@ -54,7 +54,7 @@ const SearchBar = ({navigation, setVisitToken}) => {
     {
         setVisitToken(user);
         console.log('visit token called: ' + JSON.stringify(user));
-        navigation.replace('Visiting');
+        navigation.replace('Visiting');                     
     }
     
     const popover = (

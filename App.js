@@ -30,7 +30,7 @@ const Auth = () => {
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
   });
 
-  console.log(JSON.stringify(userToken));
+  // console.log("usertoken: " + JSON.stringify(userToken));
 
   if (!loaded) {
     return null;

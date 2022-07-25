@@ -87,6 +87,7 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
         fetch('https://feastbook.herokuapp.com/api/createpost', {
             method: 'POST',
             headers: {
+                'Authorization': 'Bearer ' + userToken.token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },

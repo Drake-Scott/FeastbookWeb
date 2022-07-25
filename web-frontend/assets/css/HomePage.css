@@ -73,6 +73,10 @@
     margin-bottom: 1%;
 }
 
+.posterName {
+    cursor: pointer;
+}
+
 .homePostImg {
     /* min-width: 100%; */
 }

@@ -25,6 +25,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
       fetch('https://feastbook.herokuapp.com/api/getfavorite', {
           method: 'POST',
           headers: {
+              'Authorization': 'Bearer ' + userToken.token,
               'Accept': 'application/json',
               'Content-Type': 'application/json',
           },
@@ -63,6 +64,11 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
 
   const handleDislike = () => setShowAlert(true);
   const dislikePost = () => {
+    let retArr = likedPosts.map((x) => x);
+    let removalIndex = retArr.indexOf(selectedPost.id);
+    retArr.splice(removalIndex, 1);
+    setLikedPosts(retArr);
+
     console.log("disliked post: " + selectedPost.name)
     let dataToSend = {userid: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
@@ -70,6 +76,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
     fetch('https://feastbook.herokuapp.com/api/dislikepost', {
         method: 'POST',
         headers: {
+            'Authorization': 'Bearer ' + userToken.token,
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -78,9 +85,6 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
     })
     .then((response) => response.json())
     .then((response) => {
-        let removalIndex = localLikedPosts.indexOf(selectedPost.id);
-        let retArr = localLikedPosts.splice(removalIndex, 1);
-        setLikedPosts(retArr);
         console.log(response);
         handleClose();
         displayFavorites();
@@ -170,32 +174,3 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
 }
 
 export default LikedPosts
-
-/* <Modal show={show} onHide={handleClose} className='modalContainer'>
-        <Modal.Header className='modalHeader'>
-          <Modal.Title className='modalTitle'>
-            {selectedPost != undefined ? selectedPost.name : 'No post selected.'}
-          </Modal.Title>
-          <img src={cancelIcon} onClick={handleClose} className='cancelIcon'/>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedPost != undefined ?
-          <div className='modalBody'>
-            <div className='imageHalf'>
-              <img src={selectedPost.image}/>
-            </div>
-            <div className='infoHalf'>
-              <div>
-                Ingedients:<br/>
-                {selectedPost.ingredients}
-              </div>
-              <div>
-                Directions<br/>
-                {selectedPost.directions}
-              </div>
-            </div>
-          </div>
-          : ''
-          }
-        </Modal.Body>
-        </Modal>  */

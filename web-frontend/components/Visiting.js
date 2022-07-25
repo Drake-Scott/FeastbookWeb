@@ -13,7 +13,6 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
   const [postResults, setPostResults] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [test, setTest] = useState(false);
-  const [likeIcon, setLikeIcon] = useState(like);
   
 
 
@@ -23,13 +22,14 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
 
   const displayFavorites = () => {
     setLoading(true);
-    console.log("likedPosts in visiting: " + likedPosts)
 
     let dataToSend = {id: visitToken.id};
-    var s = JSON.stringify(dataToSend)
+    var s = JSON.stringify(dataToSend);
     fetch('https://feastbook.herokuapp.com/api/userposts', {
         method: 'POST',
         headers: {
+            'Authorization': 'Bearer ' + userToken.token,
+            // 'Accept': 'application/json, text/plain, */*',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
@@ -58,31 +58,32 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
   // console.log("liked posts in visiting: " + likedPosts.length);
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    setShow(false); 
-    setTimeout(setLikeIcon(like), 100);    
+    setShow(false);   
   };
   const handleShow = () => setShow(true);
 
   const showPost = (post) => {
-    console.log(post);
+    // console.log(post);
     setSelectedPost(post);
     handleShow();
   }
 
   const likesHandler = (postid) => {
-    // if(likedPosts.length > 0 && likedPosts.includes(postid)) handleDislike();
-    // else if(likedPosts.length <= 0 || !likedPosts.includes(postid))handleLike();
-    handleLike();
+    if(likedPosts.includes(postid)) handleDislike();
+    else handleLike();
   }
 
   const handleLike = () => {
-    console.log("Liked post: " + selectedPost.name)
+    // console.log("Liked post: " + selectedPost.name)
+    setLikedPosts([...likedPosts, selectedPost.id]);
+
     let dataToSend = {userid: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
-    console.log(s);
+    // console.log(s);
     fetch('https://feastbook.herokuapp.com/api/likepost', {
         method: 'POST',
         headers: {
+            'Authorization': 'Bearer ' + userToken.token,
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -91,7 +92,6 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
     })
     .then((response) => response.json())
     .then((response) => {
-      setLikeIcon(likeF);
       console.log(response);
     })
     .catch((error) => {
@@ -100,29 +100,30 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
   }
 
   const handleDislike = () => {
-    console.log("DiLiked post: " + selectedPost.name)
-    let dataToSend = {userid: userToken.id, postid: selectedPost.id};
-    var s = JSON.stringify(dataToSend)
-    console.log(s);
-    fetch('https://feastbook.herokuapp.com/api/dislikepost', {
-        method: 'POST',
-        headers: {
-            //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: s,
-    })
-    .then((response) => response.json())
-    .then((response) => {
-        let removalIndex = likedPosts.indexOf(selectedPost.id);
-        let retArr = likedPosts.splice(removalIndex, 1);
-        setLikedPosts(retArr);
-        console.log(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    console.log("cannot dislike post: " + selectedPost.name)
+    // let dataToSend = {userid: userToken.id, postid: selectedPost.id};
+    // var s = JSON.stringify(dataToSend)
+    // console.log(s);
+    // fetch('https://feastbook.herokuapp.com/api/dislikepost', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': 'Bearer ' + userToken.token,
+    //         //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: s,
+    // })
+    // .then((response) => response.json())
+    // .then((response) => {
+    //     let removalIndex = likedPosts.indexOf(selectedPost.id);
+    //     let retArr = likedPosts.splice(removalIndex, 1);
+    //     setLikedPosts(retArr);
+    //     console.log(response);
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    // });
   }
 
 
@@ -137,7 +138,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
             <Row className='modalHeaderRow'>
               <Col xs={9} className="modalHeaderCol1">{selectedPost.name}</Col>
               <Col className="modalHeaderCol2">
-                <img src={likeIcon} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
+                <img src={likedPosts.includes(selectedPost.id) ? likeF : like} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
                 <img src={cancelIcon} onClick={handleClose} className='vCancelIcon'/>
               </Col>
             </Row>
