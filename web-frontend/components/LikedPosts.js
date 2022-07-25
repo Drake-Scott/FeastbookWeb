@@ -1,9 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Topbar from './Topbar';
-import '../assets/css/LikedPosts.css'
-import cancelIcon from '../assets/icons/cancel.png'
-import like from '../assets/icons/like.png'
-import likeF from '../assets/icons/likeFilled.png'
+import '../assets/css/LikedPosts.css';
+import cancelIcon from '../assets/icons/cancel.png';
+import back from '../assets/icons/back.png';
+import like from '../assets/icons/like.png';
+import likeF from '../assets/icons/likeFilled.png';
 import { Container, Row, Col, Modal, Tabs, Tab, Alert, Button } from 'react-bootstrap';
 
 const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken, 
@@ -21,7 +22,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
   const displayFavorites = () => {
     let dataToSend = {userid: userToken.id};
       var s = JSON.stringify(dataToSend)
-      fetch('http://localhost:5000/api/getfavorite', {
+      fetch('https://feastbook.herokuapp.com/api/getfavorite', {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
@@ -66,7 +67,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
     let dataToSend = {userid: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
     console.log(s);
-    fetch('http://localhost:5000/api/dislikepost', {
+    fetch('https://feastbook.herokuapp.com/api/dislikepost', {
         method: 'POST',
         headers: {
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -148,8 +149,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
               <Col md={5} className='titleCell'>Liked posts:</Col>
               <Col md={{span : 5, offset: 2}} className='backToProfileCell'
                   onClick={() => navigation.navigate('FeastBook - Profile')}>
-                      {/* <img src={cancelIcon}/> */}
-                      tempBack
+                      <img src={back}/>
                   </Col>
           </Row>
           <Row className='postsRow'>            

@@ -27,7 +27,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
 
     let dataToSend = {id: visitToken.id};
     var s = JSON.stringify(dataToSend)
-    fetch('http://localhost:5000/api/userposts', {
+    fetch('https://feastbook.herokuapp.com/api/userposts', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -80,7 +80,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
     let dataToSend = {userid: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
     console.log(s);
-    fetch('http://localhost:5000/api/likepost', {
+    fetch('https://feastbook.herokuapp.com/api/likepost', {
         method: 'POST',
         headers: {
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -104,7 +104,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
     let dataToSend = {userid: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
     console.log(s);
-    fetch('http://localhost:5000/api/dislikepost', {
+    fetch('https://feastbook.herokuapp.com/api/dislikepost', {
         method: 'POST',
         headers: {
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors

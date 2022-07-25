@@ -19,7 +19,7 @@ const SearchBar = ({navigation, setVisitToken}) => {
             search: search
         }
         let s = JSON.stringify(dataToSend);
-        fetch('http://localhost:5000/api/searchuser', {
+        fetch('https://feastbook.herokuapp.com/api/searchuser', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

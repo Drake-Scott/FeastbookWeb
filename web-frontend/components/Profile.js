@@ -19,7 +19,7 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
     setLoading(true);
     let dataToSend = {id: userToken.id};
     var s = JSON.stringify(dataToSend)
-    fetch('http://localhost:5000/api/userposts', {
+    fetch('https://feastbook.herokuapp.com/api/userposts', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -69,7 +69,7 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
     let dataToSend = {id: userToken.id, postid: selectedPost.id};
     var s = JSON.stringify(dataToSend)
     console.log(s);
-    fetch('http://localhost:5000/api/deletepost', {
+    fetch('https://feastbook.herokuapp.com/api/deletepost', {
         method: 'DELETE',
         headers: {
             //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -133,7 +133,9 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
                     </div>
                   </Tab>
                   <Tab eventKey="directions" title="Directions" className='dirTab'>
-                    {selectedPost.directions}
+                    <div className='ingTabText'>
+                      {selectedPost.directions}
+                    </div>
                   </Tab>
                 </Tabs>
               </Col>

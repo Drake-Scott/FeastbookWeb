@@ -81,10 +81,10 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
         // dirString = dirString.replace(/\r?\n/g, '<br />');
 
         setLoading(true);
-        let dataToSend = {userid: userToken.id, name:inputName, photo: selectedFile64, ingredients: inputIng, directions: inputIng};
+        let dataToSend = {userid: userToken.id, name:inputName, photo: selectedFile64, ingredients: inputIng, directions: inputDir};
         var s = JSON.stringify(dataToSend)
         // console.log(s);
-        fetch('http://localhost:5000/api/createpost', {
+        fetch('https://feastbook.herokuapp.com/api/createpost', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -104,7 +104,7 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
             setInputDir(''); 
             dirRef.current = '';
             console.log("Post was successful" + response);
-            navigation.replace('FeastBook - Profile');
+            setTimeout(navigation.replace('FeastBook - Profile'), 400);
         })
         .catch((error) => {
             setLoading(false);

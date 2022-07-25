@@ -1,5 +1,6 @@
 .background {
     background-color: #1B262C;
+    font-family: MontserratSB;
     width: 100%;
     height: 100%;
     z-index: -10;
@@ -86,24 +87,21 @@
 
 .infoHalf {
     max-width: 53%;
+    word-wrap:break-word;
+    overflow-y: auto;
+    white-space: pre-wrap;
 }
 
 .ingTab {
-    /* background-color: palevioletred; */
-    /* outline: 2px solid red; */
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: scroll;
+    height: 290px;
+    overflow-y: auto;
 }
 
 .dirTab {
-    /* outline: 2px solid red; */
-    max-width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: scroll;
+    height: 290px;
+    overflow-y: auto;
 }
+
 
 .cancelIcon {
     cursor: pointer;

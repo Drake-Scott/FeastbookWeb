@@ -7,21 +7,26 @@ import likeF from '../assets/icons/likeFilled.png'
 import Topbar from './Topbar';
 import { Container, Row, Col, Modal, Tabs, Tab } from 'react-bootstrap';
 
-const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken}) => {
+const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPosts, setLikedPosts}) => {
 
     const [loading, setLoading] = useState(false);
     const [nameResults, setNameResults] = useState([]);
     const [postResults, setPostResults] = useState([]);
+
+    const [favorites, setFavorites] = useState(likedPosts);
+
     const [selectedPost, setSelectedPost] = useState(null);
+    const [fetching, setFetching] = useState(false);
+
+    console.log("liked posts: " + likedPosts);
 
     useEffect(() => {
         displayPosts();
-        getPosterNames();
       }, []);
 
     const displayPosts = () => {
         setLoading(true)
-        fetch('http://localhost:5000/api/posts', {
+        fetch('https://feastbook.herokuapp.com/api/posts', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -38,12 +43,13 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken}) => {
                     ingredients: response.results[i].ingredients,
                     directions: response.results[i].directions,
                     id: response.results[i]._id,
+                    likes: response.results[i].likes,
                     posterId: response.results[i].userid
                 }
                 arr.push(temp);
             }
-            setLoading(false);
             setPostResults(arr);
+            setLoading(false);
         })
         .catch((error) => {
             console.error(error);
@@ -56,7 +62,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken}) => {
         for (let i = 0; i < postResults.length; i++) {
             let dataToSend = {userid: postResults[i].posterId}
             var s = JSON.stringify(dataToSend)
-            fetch('http://localhost:5000/api/getuserinfo', {
+            fetch('https://feastbook.herokuapp.com/api/getuserinfo', {
                 method: 'POST',
                 headers: {
                     //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -76,9 +82,11 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken}) => {
                     directions: postResults[i].directions,
                     id: postResults[i].id,
                     posterId: postResults[i].posterId,
+                    posterName: postResults[i].login,
                 }
                 console.log(temp);
                 arr.push(temp);
+                console.log(arr)
             })
             .catch((error) => {
                 console.error(error);
@@ -88,36 +96,156 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken}) => {
         setNameResults(arr);   
     }
 
+    const getFavorites = () => {
+        let dataToSend = {userid: userToken.id};
+          var s = JSON.stringify(dataToSend)
+          fetch('https://feastbook.herokuapp.com/api/getfavorite', {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: s,
+          })
+          .then((response) => response.json())
+          .then((response) => {
+              let arr = [];
+              for (let i = 0; i < response.results.length; i++) {
+                  let temp = {
+                      name: response.results[i].name,
+                      image: response.results[i].photo,
+                      ingredients: response.results[i].ingredients,
+                      directions: response.results[i].directions,
+                      id: response.results[i]._id
+                  }
+                  arr.push(temp);
+              }
+              setFavorites(arr);
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+      }
+
+    const handleLikePress = (item) => {
+        if(likedPosts.includes(item.id)) {
+            dislikePost(item.id);
+        }
+        else {
+            likePost(item);
+        }
+    }
+
+    const dislikePost = (id) => {
+        // let removalIndex = likedPosts.indexOf(id);
+        // let retArr = likedPosts.splice(removalIndex, 1);
+        // setLikedPosts(likedPosts.filter((_, i) => i !== index));
+        // let dataToSend = {userid: userToken.id, postid: id};
+        // var s = JSON.stringify(dataToSend)
+        // console.log(s);
+        // fetch('http://localhost:5000/api/dislikepost', {
+        //     method: 'POST',
+        //     headers: {
+        //         //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: s,
+        // })
+        // .then((response) => response.json())
+        // .then((response) => {
+        //     console.log(response)
+        //     console.log(likedPosts)
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
+    }
+
+    const likePost = (item) => {
+        console.log("calling likePost in HomeScreen")
+        setLikedPosts([...likedPosts, item.id]);
+        item.likes = item.likes++;
+
+        let dataToSend = {userid: userToken.id, postid: item.id};
+        var s = JSON.stringify(dataToSend)
+        console.log(s);
+        fetch('http://localhost:5000/api/likepost', {
+            method: 'POST',
+            headers: {
+                //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: s,
+        })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+
+
     return (
         <div className='background'>
             <Topbar navigation={navigation} screenSelected={1} 
             setUserToken={setUserToken} setVisitToken={setVisitToken}/>
             <Container className='homeContainer'>
-                {postResults.length > 0 ? 
+                {postResults.length > 0 && !fetching ? 
                 postResults.map(item =>(<div key={item.id} className='allTheInfo'>
                     <Row className='homePostHeaderRow'>
-                        <Col className='homePostNameCol' md={8}>
+                        <Col className='homePostNameCol' md={7}>
                             {item.name}
                         </Col>
                         <Col className='homeUserNameCol' md={4}>
                             Poster: {item.posterId}
-                        </Col>
-                        
+                        </Col>                        
                     </Row>
                     <Row className='homePostContentRow'>
-                        <Col className='homeImgCol'>
+                        <Col className='homeImgCol' md={4}>
                         <img src={item.image} className='homePostImg'/>
                         </Col>
-                        <Col className='homeInfoCol'>
-                            
-                            <div className='homeInfoText'>
+                        <Col className='homeInfoCol' md={7}>
+                            <Tabs
+                                defaultActiveKey="ingredients"
+                                id="hPostTabs"
+                                className="tabs"
+                                >
+                                <Tab eventKey="ingredients" title="Ingredients" className='hIngTab'>
+                                    <div className='hIngTabText'>
+                                        {item.ingredients}
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="directions" title="Directions" className='hDirTab'>
+                                    <div className='hDirTabText'>
+                                        {item.directions}
+                                    </div>
+                                </Tab>
+                            </Tabs>
+                            {/* <div className='homeInfoText' wrap='hard'>
                                 Ingedients:<br/>
                                 {item.ingredients}
                             </div>
-                            <div>
+                            <div className='homeInfoText' wrap='hard'>
                                 Directions<br/>
                                 {item.directions}
-                            </div>
+                            </div> */}
+                        </Col>
+                        <Col className='homeLikesCol' md={1}>
+                            <Row className='homeLikesRow'>
+                                +{item.likes}
+                            </Row>
+                            <Row className='homeLikesRow'>                                
+                                <img src={
+                                    likedPosts.includes(item.id) ? likeF : like} 
+                                    className='hLikeIcon'
+                                    onClick={() => handleLikePress(item)}
+                                />                              
+                            </Row>
                         </Col>
                     </Row>
                 </div>))

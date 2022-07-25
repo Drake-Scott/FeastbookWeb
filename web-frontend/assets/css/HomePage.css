@@ -6,9 +6,6 @@
 .homeContainer {
     /* margin-top: 1%; */
 }
-.allTheInfo{
-    /* background-color: aqua; */
-}
 .homePostHeaderRow {
     /* border: 2px solid red; */
     margin-top: 2%;
@@ -27,7 +24,8 @@
 
 .homePostContentRow {
     /* border: 2px solid blue; */
-    /* margin-top: 2%; */
+    /* overflow: hidden; */
+    height: 350px;
 }
 
 .homeImgCol {
@@ -39,12 +37,40 @@
 .homeInfoCol {
     /* border: 2px solid red; */
     max-width: 100%;
-    overflow-x: scroll;
+    word-wrap:break-word;
+    overflow-y: auto;
     color: white;
+    white-space: pre-wrap;
+}
+
+.hIngTab {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.hDirTab {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.homeLikesCol {
+    /* border: 2px solid red; */
+    
+}
+.homeLikesRow {
+    color: white;
+    font-size: xx-large;
+    justify-content: center;
+}
+.hLikeIcon {
+    margin-left: 10%;
+    cursor: pointer;
 }
 
 .homeInfotext {
-    white-space: pre-wrap;
+    max-height: 100%;
+    width: inherit;
+    margin-bottom: 1%;
 }
 
 .homePostImg {

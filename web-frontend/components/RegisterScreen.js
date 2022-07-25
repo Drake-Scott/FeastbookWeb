@@ -68,7 +68,7 @@ const LoginScreen = ({navigation}) => {
             email: userEmail
         };
         let s = JSON.stringify(dataToSend);
-        fetch('http://localhost:5000/api/register', {
+        fetch('https://feastbook.herokuapp.com/api/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

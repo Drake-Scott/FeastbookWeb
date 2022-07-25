@@ -33,7 +33,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
         setLoading(true);
         let dataToSend = {login: userEmail, password: userPassword};
         var s = JSON.stringify(dataToSend);
-        fetch('http://localhost:5000/api/login', {
+        fetch('https://feastbook.herokuapp.com/api/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -51,7 +51,6 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
                 createLikesArr(responseJson.id);
                 setLoading(false);
                 setReturnToken(responseJson); 
-
             }
             else {
                 setErrortext(responseJson.msg); 
@@ -67,7 +66,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     function createLikesArr(userid) {
         let dataToSend = {userid: userid};
         var s = JSON.stringify(dataToSend)
-        fetch('http://localhost:5000/api/getfavorite', {
+        fetch('https://feastbook.herokuapp.com/api/getfavorite', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -82,7 +81,6 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
                 arr.push(response.results[i]._id);
             }
             setLikedPosts(arr);
-            console.log( "called setLikedPosts on arr");
         })
         .catch((error) => {
             console.error(error);
