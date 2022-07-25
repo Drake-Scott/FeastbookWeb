@@ -114,7 +114,7 @@ const LoginScreen = ({navigation}) => {
                     <div>Click the link in your email to finalize account creation</div>
 
                     <label>Ready to log in?</label>
-                    <Button onClick={() => navigation.replace("FeastBook - Login")} variant="success"></Button>
+                    <Button onClick={() => navigation.replace("Login")} variant="success"></Button>
                 </Modal>
                 <View style={{flexDirection:'row', flexWrap:'wrap', alignSelf:'center'}}>
                     <Image source={feastbook} style={{width: 300, height: 600}}/>
@@ -123,7 +123,7 @@ const LoginScreen = ({navigation}) => {
                         <View style={styles.tabs}>
                         <View style={styles.loginTab}>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('FeastBook - Login')}>
+                                onPress={() => navigation.navigate('Login')}>
                                 <Text style={styles.loginTextStyle}>Login</Text>
                             </TouchableOpacity>
                         </View>

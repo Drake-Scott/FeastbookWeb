@@ -148,7 +148,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
           <Row className='headerRow'>
               <Col md={5} className='titleCell'>Liked posts:</Col>
               <Col md={{span : 5, offset: 2}} className='backToProfileCell'
-                  onClick={() => navigation.navigate('FeastBook - Profile')}>
+                  onClick={() => navigation.navigate('Profile')}>
                       <img src={back}/>
                   </Col>
           </Row>

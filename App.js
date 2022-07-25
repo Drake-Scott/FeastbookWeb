@@ -15,33 +15,6 @@ import RegisterSuccess from './web-frontend/components/RegisterSuccess';
 
 
 const Stack = createStackNavigator();
-// const validationToken = '_TOKEN_VARIABLE_';
-
-// const config = {
-//   screens: {
-//     RegisterSuccess: 'hello',
-//     Login: 'login',
-//     Register: 'register',
-//   },
-// };
-
-// const linking = {
-//   prefixes: ['https://feastbook.herokuapp.com'],
-//   config,
-// };
-
-// const state = {
-//   type: 'stack',
-//   key: 'stack-1',
-//   routeNames: ['Login', 'Register', 'RegisterSuccess'],
-//   routes: [
-//     { key: 'login', name: 'Login'},
-//     { key: 'register', name: 'Register' },
-//     { key: 'RegisterSuccess', name: 'RegisterSuccess', params: { token: validationToken } },
-//   ],
-//     index: 1,
-//     stale: false
-// };
 
 
 const Auth = () => {
@@ -57,7 +30,7 @@ const Auth = () => {
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
   });
 
-  console.log(parsed);
+  console.log(JSON.stringify(userToken));
 
   if (!loaded) {
     return null;
@@ -67,11 +40,11 @@ const Auth = () => {
   {
     return (
       <Stack.Navigator> 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="RegisterSuccess"
           component={RegisterSuccess}
           options={{headerShown: false}}
-        />  
+        />   */}
         <Stack.Screen
           name="Login"
           // component={LoginScreen}
@@ -98,25 +71,25 @@ const Auth = () => {
           setVisitToken={setVisitToken} likedPosts={likedPosts} setLikedPosts={setLikedPosts}/>}
         </Stack.Screen>
         <Stack.Screen
-          name='FeastBook - Profile' 
+          name='Profile' 
           options={{headerShown: false}}>
           {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
           setVisitToken={setVisitToken}/>}
         </Stack.Screen>
         <Stack.Screen
-          name='FeastBook - Add Post'
+          name='Add Post'
           options={{headerShown: false}}>
           {(props) => <AddPost {...props} userToken={userToken}setUserToken={setUserToken}
           setVisitToken={setVisitToken}/>}
         </Stack.Screen>
         <Stack.Screen
-          name='FeastBook - Likes'
+          name='Likes'
           options={{headerShown: false}}>
           {(props) => <LikedPosts {...props} userToken={userToken} setUserToken={setUserToken}
           setVisitToken={setVisitToken} likedPosts={likedPosts} setLikedPosts={setLikedPosts}/>}
         </Stack.Screen>
         <Stack.Screen
-          name='FeastBook - Visiting' 
+          name='Visiting' 
           options={{headerShown: false}}>
           {(props) => <Visiting {...props} userToken={userToken} setUserToken={setUserToken} 
           visitToken={visitToken} setVisitToken={setVisitToken} likedPosts={likedPosts}
@@ -130,7 +103,8 @@ const Auth = () => {
 
 const App = () => {
   return (
-    <NavigationContainer linking={linking}>
+    //linking={linking}
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Auth"

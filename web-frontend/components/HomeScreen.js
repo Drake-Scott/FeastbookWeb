@@ -44,7 +44,8 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
                     directions: response.results[i].directions,
                     id: response.results[i]._id,
                     likes: response.results[i].likes,
-                    posterId: response.results[i].userid
+                    posterId: response.results[i].userid,
+                    posterName: response.results[i].login
                 }
                 arr.push(temp);
             }
@@ -143,7 +144,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
         // let dataToSend = {userid: userToken.id, postid: id};
         // var s = JSON.stringify(dataToSend)
         // console.log(s);
-        // fetch('http://localhost:5000/api/dislikepost', {
+        // fetch('https://feastbook.herokuapp.com/api/dislikepost', {
         //     method: 'POST',
         //     headers: {
         //         //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -170,7 +171,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
         let dataToSend = {userid: userToken.id, postid: item.id};
         var s = JSON.stringify(dataToSend)
         console.log(s);
-        fetch('http://localhost:5000/api/likepost', {
+        fetch('https://feastbook.herokuapp.com/api/likepost', {
             method: 'POST',
             headers: {
                 //'Accept': 'application/json, text/plain, */*',  // It can be used to overcome cors errors
@@ -188,6 +189,10 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
         });
     }
 
+    const visitOtherUser = (item) => {
+
+    }
+
 
 
     return (
@@ -202,7 +207,9 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
                             {item.name}
                         </Col>
                         <Col className='homeUserNameCol' md={4}>
-                            Poster: {item.posterId}
+                            <div onClick={() => visitOtherUser(item)}>
+                                Poster: {item.posterName}
+                            </div>
                         </Col>                        
                     </Row>
                     <Row className='homePostContentRow'>

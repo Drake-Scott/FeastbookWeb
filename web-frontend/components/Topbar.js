@@ -52,13 +52,13 @@ const Topbar = ({navigation, screenSelected, setUserToken, setVisitToken}) => {
 
     // Top right navigation icons.
     const handleHomeClick = () => {
-        navigation.replace('FeastBook - Home');
+        navigation.replace('Home');
     }
     const handlePlusClick = () => {
-        navigation.replace('FeastBook - Add Post');
+        navigation.replace('Add Post');
     }
     const handleProfileClick = () => {
-        navigation.replace('FeastBook - Profile');
+        navigation.replace('Profile');
     }
     const handleLogoutClick = () => {
         setUserToken(null);

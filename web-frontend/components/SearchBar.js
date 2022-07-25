@@ -54,7 +54,7 @@ const SearchBar = ({navigation, setVisitToken}) => {
     {
         setVisitToken(user);
         console.log('visit token called: ' + JSON.stringify(user));
-        navigation.replace('FeastBook - Visiting');
+        navigation.replace('Visiting');
     }
     
     const popover = (
@@ -92,7 +92,6 @@ const SearchBar = ({navigation, setVisitToken}) => {
 
     return (
         <div className='searchContainer'>
-            {/* <div className='searchBar' onBlur={wipeSearch} onFocus={initSearch}> */}
             <OverlayTrigger trigger='focus' placement='bottom-start' overlay={popover}>
                 <div className='searchBar' 
                 onBlur={wipeSearch} onFocus={initSearch}>

@@ -69,7 +69,8 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
         fetch('https://feastbook.herokuapp.com/api/getfavorite', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
+                'Accept': 'application/json, text/plain, /',
+                // 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: s,
@@ -112,7 +113,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
                             </View>
                             <View style={styles.registerTab}>
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('FeastBook - Register')}>
+                                    onPress={() => navigation.navigate('Register')}>
                                     <Text style={styles.registerTextStyle}>Register</Text>
                                 </TouchableOpacity>
                             </View>

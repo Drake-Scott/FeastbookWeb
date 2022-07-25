@@ -149,7 +149,7 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
         <Row className='headerRow'>
           <Col md={5} className='nameCell'>{userToken.firstname}</Col>
           <Col md={{span : 5, offset: 2}} className='favoritesCell'
-                onClick={() => navigation.navigate('FeastBook - Likes')}>Liked</Col>
+                onClick={() => navigation.navigate('Likes')}>Liked</Col>
         </Row>
         <Row className='postsRow'>          
           {postResults.length > 0 ? 

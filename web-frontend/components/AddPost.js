@@ -104,7 +104,7 @@ const AddPost = ({navigation, userToken, setUserToken, setVisitToken}) => {
             setInputDir(''); 
             dirRef.current = '';
             console.log("Post was successful" + response);
-            setTimeout(navigation.replace('FeastBook - Profile'), 400);
+            setTimeout(navigation.replace('Profile'), 400);
         })
         .catch((error) => {
             setLoading(false);
