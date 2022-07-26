@@ -2,8 +2,8 @@ import React, {useState, useRef, useEffect} from 'react';
 import Topbar from './Topbar';
 import '../assets/css/Profile.css';
 import cancelIcon from '../assets/icons/cancel.png'
-import like from '../assets/icons/like.png'
-import likeF from '../assets/icons/likeFilled.png'
+import like from '../assets/icons/dislike.png'
+import likeF from '../assets/icons/likePlus.png'
 import { Container, Row, Col, Modal, Tabs, Tab, Alert, Button } from 'react-bootstrap';
 
 const Visiting = ({navigation, userToken, setUserToken, visitToken, 
@@ -138,7 +138,7 @@ const Visiting = ({navigation, userToken, setUserToken, visitToken,
             <Row className='modalHeaderRow'>
               <Col xs={9} className="modalHeaderCol1">{selectedPost.name}</Col>
               <Col className="modalHeaderCol2">
-                <img src={likedPosts.includes(selectedPost.id) ? likeF : like} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
+                <img src={likedPosts.includes(selectedPost.id) ? like : likeF} onClick={() => likesHandler(selectedPost.id)} className='vLikeIcon'/>
                 <img src={cancelIcon} onClick={handleClose} className='vCancelIcon'/>
               </Col>
             </Row>

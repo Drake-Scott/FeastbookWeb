@@ -2,9 +2,9 @@ import React, {useState, useRef, useEffect} from 'react';
 import Topbar from './Topbar';
 import '../assets/css/LikedPosts.css';
 import cancelIcon from '../assets/icons/cancel.png';
-import back from '../assets/icons/back.png';
+import back from '../assets/icons/back64.png';
 import like from '../assets/icons/like.png';
-import likeF from '../assets/icons/likeFilled.png';
+import likeF from '../assets/icons/dislike.png';
 import { Container, Row, Col, Modal, Tabs, Tab, Alert, Button } from 'react-bootstrap';
 
 const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken, 
@@ -102,7 +102,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
       <Modal show={show} onHide={handleClose} className='modalContainer'>
         <Alert variant='warning' show={showAlert} className='delAlert'>
         <Alert.Heading>
-          Dislike {selectedPost !== null ? selectedPost.name : "this post"}?
+          Unfavorite {selectedPost !== null ? selectedPost.name : "this post"}?
         </Alert.Heading>
         <hr/>
         <div className="d-flex justify-content-lg-between">
@@ -110,7 +110,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
             Cancel
           </Button>
           <Button onClick={dislikePost} variant="warning">
-            Remove from Liked Posts.
+            Remove from Favorites.
           </Button>
         </div>
         </Alert>
@@ -150,7 +150,7 @@ const LikedPosts = ({navigation, userToken, setUserToken, setVisitToken,
       </Modal>
       <Container>
           <Row className='headerRow'>
-              <Col md={5} className='titleCell'>Liked posts:</Col>
+              <Col md={5} className='titleCell'>Favorites:</Col>
               <Col md={{span : 5, offset: 2}} className='backToProfileCell'
                   onClick={() => navigation.navigate('Profile')}>
                       <img src={back}/>

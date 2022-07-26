@@ -14,17 +14,12 @@
 .homeUserNameCol{
     /* border: 2px solid green; */
     display: flex;
-    font-size:xx-large;
-    justify-content: left;
+    justify-content: right;
     align-items: center;
 }
 .homePostNameCol{
-    /* border: 2px solid green; */
-    display: flex;
-    font-size: x-large;
-    justify-content: left;
+    font-size: xx-large;
     align-items: center;
-    margin-left: -26%;
 }
 
 .homePostContentRow {
@@ -48,11 +43,10 @@
     white-space: pre-wrap;
 }
 
-.hIngTab:active {
+.hIngTab {
     height: 300px;
     overflow-y: auto;
 }
-
 
 .hDirTab {
     height: 300px;

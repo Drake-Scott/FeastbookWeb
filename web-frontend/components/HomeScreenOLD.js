@@ -25,6 +25,7 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
       }, []);
 
     const displayPosts = () => {
+        console.log("usertoken in homescreen displayposts: " + userToken.token)
         setLoading(true)
         fetch('https://feastbook.herokuapp.com/api/posts', {
             method: 'GET',
@@ -218,13 +219,13 @@ const HomeScreen = ({navigation, userToken, setUserToken, setVisitToken, likedPo
                 {postResults.length > 0 && !fetching ? 
                 postResults.map(item =>(<div key={item.id} className='allTheInfo'>
                     <Row className='homePostHeaderRow'>
-                        <Col className='homeUserNameCol' md={7}>
-                            <div onClick={() => visitOtherUser(item)}  className='posterName'>
-                                {item.posterName}
-                            </div>
-                        </Col>
-                        <Col className='homePostNameCol' md={5}>
+                        <Col className='homePostNameCol' md={7}>
                             {item.name}
+                        </Col>
+                        <Col className='homeUserNameCol' md={4}>
+                            <div onClick={() => visitOtherUser(item)}  className='posterName'>
+                                Poster: {item.posterName}
+                            </div>
                         </Col>                        
                     </Row>
                     <Row className='homePostContentRow'>

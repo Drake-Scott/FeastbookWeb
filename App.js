@@ -13,6 +13,8 @@ import LikedPosts from './web-frontend/components/LikedPosts';
 import Visiting from './web-frontend/components/Visiting';
 import RegisterSuccess from './web-frontend/components/RegisterSuccess';
 import ForgotPassword from './web-frontend/components/ForgotPassword';
+import PWResetSuccessful from './web-frontend/components/PWResetSuccessful';
+import VerifyAccount from './web-frontend/components/VerifyAccount';
 
 
 const Stack = createStackNavigator();
@@ -26,12 +28,13 @@ const Auth = () => {
   // const[visitToken, setVisitToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:"",username:'Tuo'});
   const[visitToken, setVisitToken] = useState(null);
   const[likedPosts, setLikedPosts] = useState([]);
+  const[userLogin , setUserLogin] = useState('')
   const [loaded] = useFonts({
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
   });
 
-  // console.log("usertoken: " + JSON.stringify(userToken));
+  console.log("userlogin: " + userLogin);
 
   if (!loaded) {
     return null;
@@ -41,17 +44,11 @@ const Auth = () => {
   {
     return (
       <Stack.Navigator> 
-        {/* <Stack.Screen
-          name="RegisterSuccess"
-          component={RegisterSuccess}
-          options={{headerShown: false}}
-        />   */}
         <Stack.Screen
           name="Login"
-          // component={LoginScreen}
           options={{headerShown: false}}>
           {(props) => <LoginScreen {...props} setReturnToken={setUserToken} 
-          setLikedPosts={setLikedPosts}/>}
+          setLikedPosts={setLikedPosts} setUserLogin={setUserLogin}/>}
         </Stack.Screen>
         <Stack.Screen
           name="Register"
@@ -59,10 +56,25 @@ const Auth = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="RegisterSuccess"
+          component={RegisterSuccess}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="PWResetSuccessful"
+          component={PWResetSuccessful}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="VerifyAccount"
+          options={{headerShown: false}}>
+            {(props) => <VerifyAccount {...props} setUserToken={setUserToken}/>}
+        </Stack.Screen>
       </Stack.Navigator> 
     );
   }
@@ -80,7 +92,7 @@ const Auth = () => {
           name='Profile' 
           options={{headerShown: false}}>
           {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
-          setVisitToken={setVisitToken}/>}
+          setVisitToken={setVisitToken} userLogin={userLogin}/>}
         </Stack.Screen>
         <Stack.Screen
           name='Add Post'
@@ -100,6 +112,11 @@ const Auth = () => {
           {(props) => <Visiting {...props} userToken={userToken} setUserToken={setUserToken} 
           visitToken={visitToken} setVisitToken={setVisitToken} likedPosts={likedPosts}
           setLikedPosts={setLikedPosts}/>}
+        </Stack.Screen>
+        <Stack.Screen
+          name="VerifyAccount"
+          options={{headerShown: false}}>
+            {(props) => <VerifyAccount {...props} setUserToken={setUserToken}/>}
         </Stack.Screen>
       </Stack.Navigator>
     );

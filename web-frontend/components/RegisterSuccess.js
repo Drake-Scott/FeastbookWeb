@@ -8,17 +8,19 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 const RegisterSuccess = ({navigation}) => {
 
   return (
-    <Container fluid>
-        <Row className='regSuccessRow'>
-            <img src={checkmark} />       
-        </Row>
-        <Row className='regSuccessRow'>
-            Heyo
-        </Row>
-        <Row className='regSuccessRow'>
-            <Button>Ready to log in?</Button>
-        </Row>
-    </Container>
+    <div className='background'>
+      <Container className='regSuccessContainer' fluid>
+          <Row className='regSuccessRow1'>
+              Follow the link in your email to verify the account      
+          </Row>
+          <Row className='regSuccessRow'>
+              <button onClick={() => navigation.replace("Login")}
+              className='regSuccessButtonStyle'>
+                Ready to log in?
+              </button>
+          </Row>
+      </Container>
+    </div>
   )
 
 }

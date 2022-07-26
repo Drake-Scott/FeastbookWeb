@@ -27,36 +27,34 @@ const LoginScreen = ({navigation}) => {
     const [userPassword2, setUserPassword2] = useState('');
     const [loading, setLoading] = useState(false);
     const [errortext, setErrortext] = useState('');
-    const [showModal, setShowModal] = useState(false);
     const passwordInputRef = createRef();
-    const [show, setShow] = useState(false);    //confirm email modal
 
 
     const handleSubmitPress = () => {
         
         setErrortext('');
         if (!firstname) {
-            alert('First name required');
+            setErrortext('First name required');
             return;
         }
         if (!lastname) {
-            alert('Last name required');
+            setErrortext('Last name required');
             return;
         }
         if (!username) {
-            alert('Username required');
+            setErrortext('Username required');
             return;
         }
         if (!userEmail) {
-            alert('Email required');
+            setErrortext('Email required');
             return;
         }
         if (!userPassword1) {
-            alert('Password required');
+            setErrortext('Password required');
             return;
         }
         if (userPassword1 !== userPassword2) {
-            alert('Passwords must match');
+            setErrortext('Passwords must match');
             return;
         }
         setLoading(true);
@@ -76,19 +74,17 @@ const LoginScreen = ({navigation}) => {
             },
             body: s,
         })
-
         .then((response) => response.json())
-        .then((responseJson) => {
+        .then((response) => {
             setLoading(false);
-            console.log(responseJson);
-            
-            if (responseJson.added === true) {
-                //show the modal
-                handleShow();
+            console.log(response);
+            if (response.added === true) {
+                navigation.navigate('RegisterSuccess');
+                return;
             }
             else {
-                setErrortext(responseJson.error);
-                console.log('Failed to register. Error: ' + responseJson.error);
+                setErrortext(response.error);
+                console.log('Failed to register. Error: ' + response.error);
             }
         })
         .catch((error) => {
@@ -97,8 +93,6 @@ const LoginScreen = ({navigation}) => {
         });
     }
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     return (
         <ScrollView style={{flex:1, backgroundColor: '#fff'}}>
@@ -109,13 +103,6 @@ const LoginScreen = ({navigation}) => {
                 <View>
                     <Text style={styles.sloganText}>Connect with friends and share your culinary creations with the world</Text>
                 </View>
-                <Modal show={show} onHide={handleClose}>
-                    <div>Thank you for Registering</div>
-                    <div>Click the link in your email to finalize account creation</div>
-
-                    <label>Ready to log in?</label>
-                    <Button onClick={() => navigation.replace("Login")} variant="success"></Button>
-                </Modal>
                 <View style={{flexDirection:'row', flexWrap:'wrap', alignSelf:'center'}}>
                     <Image source={feastbook} style={{width: 300, height: 600}}/>
                     
@@ -284,8 +271,9 @@ const styles = StyleSheet.create({
     },
 
     errorTextStyle: {
-        marginLeft: '10px',
-        color: 'red'
+        marginLeft: '30%',
+        color: 'red',
+        fontSize: 'medium',
     },
 
     tabs: {

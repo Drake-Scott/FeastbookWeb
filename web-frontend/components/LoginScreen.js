@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
+const LoginScreen = ({navigation, setReturnToken, setLikedPosts, setUserLogin}) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -23,13 +23,14 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     const handleSubmitPress = () => {
         setErrortext('');
         if (!userEmail) {
-            alert('Username required');
+            setErrortext('Username required');
             return;
         }
         if (!userPassword) {
-            alert('Password required');
+            setErrortext('Password required');
             return;
         }
+        setUserLogin(userEmail);
         setLoading(true);
         let dataToSend = {login: userEmail, password: userPassword};
         var s = JSON.stringify(dataToSend);
@@ -42,17 +43,19 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
             body: s,
         })
         .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
-            console.log("Response Json: " + JSON.stringify(responseJson));
-            if (responseJson.id != -1) {
-                // setReturnToken({id: responseJson.id, name: responseJson.firstname}); 
-                createLikesArr(responseJson.id, responseJson.token);
-                setLoading(false);
-                setReturnToken(responseJson); 
+        .then((response) => {
+            console.log(response);
+            if (response.id !== -1) {
+                if (response.error === "Not verified check email") {
+                    navigation.navigate('VerifyAccount');
+                    return;
+                }
+                createLikesArr(response.id, response.token);
+                setLoading(false);                
+                setReturnToken(response); 
             }
             else {
-                setErrortext(responseJson.msg); 
+                setErrortext(response.error); 
                 console.log('Incorrect username and/or password');
             }
         })
@@ -90,7 +93,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     }
 
     const handleForgotPassword = () => {
-        navigate.replace('ForgotPassword')
+        navigation.replace('ForgotPassword')
     }
 
     return (
@@ -230,6 +233,9 @@ const styles = StyleSheet.create({
     },
 
     errorTextStyle: {
+        marginLeft: '30%',
+        color: 'red',
+        fontSize: 'medium',
     },
 
     tabs: {

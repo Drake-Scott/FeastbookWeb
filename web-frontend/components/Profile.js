@@ -5,7 +5,7 @@ import cancelIcon from '../assets/icons/cancel.png'
 import delIcon from '../assets/icons/delete.png'
 import { Container, Row, Col, Modal, Tabs, Tab, Alert, Button } from 'react-bootstrap';
 
-const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
+const Profile = ({navigation, userToken, setUserToken, setVisitToken, userLogin}) => {
 
   const [loading, setLoading] = useState(false);
   const [postResults, setPostResults] = useState([]);
@@ -149,9 +149,9 @@ const Profile = ({navigation, userToken, setUserToken, setVisitToken}) => {
       </Modal> 
       <Container>
         <Row className='headerRow'>
-          <Col md={5} className='nameCell'>{userToken.firstname}</Col>
+          <Col md={5} className='nameCell'>{/*userToken.firstname*/userLogin}</Col>
           <Col md={{span : 5, offset: 2}} className='favoritesCell'
-                onClick={() => navigation.navigate('Likes')}>Liked</Col>
+                onClick={() => navigation.navigate('Likes')}>Favorites</Col>
         </Row>
         <Row className='postsRow'>          
           {postResults.length > 0 ? 
