@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-const LoginScreen = ({navigation, setReturnToken, setLikedPosts, setUserLogin}) => {
+const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -30,7 +30,6 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts, setUserLogin}) 
             setErrortext('Password required');
             return;
         }
-        setUserLogin(userEmail);
         setLoading(true);
         let dataToSend = {login: userEmail, password: userPassword};
         var s = JSON.stringify(dataToSend);
@@ -51,7 +50,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts, setUserLogin}) 
                     return;
                 }
                 createLikesArr(response.id, response.token);
-                setLoading(false);                
+                setLoading(false);         
                 setReturnToken(response); 
             }
             else {

@@ -28,13 +28,12 @@ const Auth = () => {
   // const[visitToken, setVisitToken] = useState({id:"62c4ea70c3fe9324a69e9ea3",firstname:"Tuo",lastname:"Contramaestre",error:"",username:'Tuo'});
   const[visitToken, setVisitToken] = useState(null);
   const[likedPosts, setLikedPosts] = useState([]);
-  const[userLogin , setUserLogin] = useState('')
   const [loaded] = useFonts({
     Montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     MontserratSB: require('./assets/fonts/Montserrat-SemiBold.ttf'),
   });
 
-  console.log("userlogin: " + userLogin);
+  // console.log("usertoken: " + JSON.stringify(userToken))
 
   if (!loaded) {
     return null;
@@ -48,7 +47,7 @@ const Auth = () => {
           name="Login"
           options={{headerShown: false}}>
           {(props) => <LoginScreen {...props} setReturnToken={setUserToken} 
-          setLikedPosts={setLikedPosts} setUserLogin={setUserLogin}/>}
+          setLikedPosts={setLikedPosts}/>}
         </Stack.Screen>
         <Stack.Screen
           name="Register"
@@ -92,7 +91,7 @@ const Auth = () => {
           name='Profile' 
           options={{headerShown: false}}>
           {(props) => <Profile {...props} userToken={userToken} setUserToken={setUserToken}
-          setVisitToken={setVisitToken} userLogin={userLogin}/>}
+          setVisitToken={setVisitToken}/>}
         </Stack.Screen>
         <Stack.Screen
           name='Add Post'
