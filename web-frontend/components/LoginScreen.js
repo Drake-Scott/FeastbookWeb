@@ -90,7 +90,7 @@ const LoginScreen = ({navigation, setReturnToken, setLikedPosts}) => {
     }
 
     const handleForgotPassword = () => {
-        console.log("forgot password clicked")
+        navigate.replace('ForgotPassword')
     }
 
     return (

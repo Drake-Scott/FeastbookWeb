@@ -12,6 +12,7 @@ import Profile from './web-frontend/components/Profile';
 import LikedPosts from './web-frontend/components/LikedPosts';
 import Visiting from './web-frontend/components/Visiting';
 import RegisterSuccess from './web-frontend/components/RegisterSuccess';
+import ForgotPassword from './web-frontend/components/ForgotPassword';
 
 
 const Stack = createStackNavigator();
@@ -55,6 +56,11 @@ const Auth = () => {
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
           options={{headerShown: false}}
         />
       </Stack.Navigator> 
